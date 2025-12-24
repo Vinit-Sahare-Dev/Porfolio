@@ -1,17 +1,17 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { ThemeToggle } from './ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { photographerInfo } from '@/data/photographer';
+import { developerInfo } from '@/data/developer';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
   { name: 'Home', path: '/' },
-  { name: 'Portfolio', path: '/portfolio' },
+  { name: 'Projects', path: '/portfolio' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
 ];
@@ -47,7 +47,7 @@ export function Header() {
           <Link
             to="/"
             className={cn(
-              'text-lg font-light tracking-widest transition-all duration-300',
+              'text-lg font-semibold tracking-wide transition-all duration-300',
               isTransparent
                 ? 'text-white hover:text-white/80'
                 : 'text-foreground hover:text-foreground/80'
@@ -57,8 +57,10 @@ export function Header() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-2"
             >
-              {photographerInfo.name.toUpperCase()}
+              <span className="text-primary font-mono">&lt;/&gt;</span>
+              {developerInfo.name.split(' ')[0]}
             </motion.span>
           </Link>
 
@@ -73,14 +75,23 @@ export function Header() {
                 >
                   <Link
                     to={link.path}
-                    className="relative text-lg leading-7 font-light tracking-wide text-white transition-colors duration-300 hover:text-white/80"
+                    className={cn(
+                      "relative text-sm font-medium tracking-wide transition-colors duration-300",
+                      isTransparent
+                        ? "text-white/90 hover:text-white"
+                        : "text-muted-foreground hover:text-foreground",
+                      location.pathname === link.path && (isTransparent ? "text-white" : "text-foreground")
+                    )}
                   >
                     {link.name}
                     {/* Active underline */}
                     {location.pathname === link.path && (
                       <motion.div
                         layoutId="activeNav"
-                        className="absolute -bottom-1 left-0 right-0 h-px bg-white"
+                        className={cn(
+                          "absolute -bottom-1 left-0 right-0 h-0.5 rounded-full",
+                          isTransparent ? "bg-white" : "bg-primary"
+                        )}
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -120,7 +131,7 @@ export function Header() {
                       key={link.path}
                       to={link.path}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-lg leading-7 font-light tracking-wide text-foreground hover:text-foreground/80"
+                      className="text-lg font-medium tracking-wide text-foreground hover:text-foreground/80"
                     >
                       {link.name}
                     </Link>
