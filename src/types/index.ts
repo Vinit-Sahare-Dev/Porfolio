@@ -1,17 +1,17 @@
 /**
- * Core TypeScript interfaces for Frame Portfolio
- * Based on SPECIFICATION.md data model requirements
+ * Core TypeScript interfaces for Developer Portfolio
+ * Updated for Java Full Stack Developer showcase
  */
 
-export type ProjectCategory = 'portraits' | 'landscapes' | 'editorial' | 'architecture' | 'documentary';
+export type ProjectCategory = 'fullstack' | 'backend' | 'frontend' | 'microservices' | 'devops';
 
-export type AspectRatio = 'portrait' | 'landscape' | 'square';
+export type TechStack = string[];
 
 export interface ProjectImage {
   id: string;
   src: string;
   alt: string;
-  aspectRatio: AspectRatio;
+  aspectRatio: 'portrait' | 'landscape' | 'square';
   caption?: string;
 }
 
@@ -23,37 +23,56 @@ export interface Project {
   coverImage: string;
   images: ProjectImage[];
   description: string;
-  client?: string;
-  camera?: string;
-  location?: string;
+  techStack: TechStack;
+  features: string[];
+  github?: string;
+  liveDemo?: string;
   slug: string;
 }
 
-export interface PhotographerInfo {
+export interface Skill {
+  name: string;
+  items: string[];
+  icon?: string;
+}
+
+export interface Experience {
+  title: string;
+  company: string;
+  period: string;
+  description: string;
+}
+
+export interface DeveloperInfo {
   name: string;
   tagline: string;
   heroIntroduction: string;
-  biography: string;
-  approach: string;
-  awards: string[];
-  clients: string[];
-  education: string;
+  professionalSummary: string;
+  skills: Skill[];
+  experience: Experience[];
+  education: {
+    degree: string;
+    institution: string;
+    period: string;
+    grade: string;
+  }[];
+  achievements: string[];
   location: string;
   email: string;
   phone: string;
   availability: string;
   socialLinks: {
-    instagram?: string;
+    github?: string;
     linkedin?: string;
-    behance?: string;
+    twitter?: string;
   };
-  portraitImage: string;
+  profileImage: string;
 }
 
 export interface ContactSubmission {
   name: string;
   email: string;
-  projectType: 'editorial' | 'commercial' | 'personal';
+  projectType: 'fullstack' | 'backend' | 'frontend' | 'consulting';
   message: string;
   timestamp: Date;
 }
