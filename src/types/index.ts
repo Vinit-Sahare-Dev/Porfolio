@@ -27,6 +27,7 @@ export interface Project {
   features: string[];
   github?: string;
   liveDemo?: string;
+  liveUrl?: string;
   slug: string;
 }
 

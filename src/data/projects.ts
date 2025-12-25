@@ -99,6 +99,40 @@ export const projects: Project[] = [
         aspectRatio: 'landscape'
       }
     ]
+  },
+  {
+    id: '4',
+    title: 'Veridia Hiring Platform',
+    category: 'fullstack',
+    year: '2024',
+    slug: 'veridia-hiring-platform',
+    coverImage: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    description: 'A minimal full-stack MVP that streamlines recruitment, featuring a React + Vite frontend and Spring Boot backend. Supports candidate registration, application submission, and admin management.',
+    techStack: ['React', 'Vite', 'Spring Boot', 'Java', 'MySQL', 'REST APIs', 'Vercel'],
+    features: [
+      'Candidate registration system',
+      'Application submission workflow',
+      'Admin management dashboard',
+      'RESTful API architecture',
+      'Responsive React frontend',
+      'Production-ready deployment'
+    ],
+    github: 'https://github.com/Vinit-Sahare-Dev/Veridiahiringplatform',
+    liveUrl: 'https://veridiahiringplatform-fayw.vercel.app',
+    images: [
+      {
+        id: '4-1',
+        src: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Veridia Hiring Platform dashboard',
+        aspectRatio: 'landscape'
+      },
+      {
+        id: '4-2',
+        src: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Recruitment management interface',
+        aspectRatio: 'landscape'
+      }
+    ]
   }
 ];
 
