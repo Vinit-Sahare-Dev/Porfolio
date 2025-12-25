@@ -1,4 +1,5 @@
 import type { DeveloperInfo } from '@/types';
+import profilePhoto from '@/assets/profile-photo.jpeg';
 
 export const developerInfo: DeveloperInfo = {
   name: 'Vinit Sahare',
@@ -7,6 +8,7 @@ export const developerInfo: DeveloperInfo = {
   professionalSummary: `Full Stack Developer proficient in Java, Spring Boot, React.js, and SQL. I possess a strong foundation in object-oriented design, data structures, and the full software development lifecycle. My focus is on building scalable and effective web applications that solve real-world problems.
 
 With hands-on experience from internships at Octal Net Services, Walmart Global Tech, and TCS, I've developed expertise in both frontend and backend technologies. I'm passionate about clean code, microservices architecture, and leveraging modern DevOps tools to deliver high-quality software.`,
+  profileImage: profilePhoto,
   skills: [
     {
       name: 'Frontend',
@@ -79,6 +81,5 @@ With hands-on experience from internships at Octal Net Services, Walmart Global 
   socialLinks: {
     github: 'https://github.com/Vinit-Sahare-Dev',
     linkedin: 'https://www.linkedin.com/in/vinit-sahare'
-  },
-  profileImage: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3MDA2OTF8MHwxfHJhbmRvbXx8fHx8fHx8fDE3NjI3Njk1NjB8&ixlib=rb-4.1.0&q=80&w=400'
+  }
 };

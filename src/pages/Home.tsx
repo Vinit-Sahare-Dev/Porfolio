@@ -5,7 +5,7 @@ import { ProjectCard } from '@/components/portfolio/ProjectCard';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { ArrowRight, Code2, Database, Server, Settings } from 'lucide-react';
+import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 
@@ -29,20 +29,20 @@ export default function Home() {
       
       <div className="min-h-screen">
         {/* Hero Section - Full viewport with gradient */}
-        <section className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
+        <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
           {/* Animated background elements */}
           <div className="absolute inset-0 overflow-hidden">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
             <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
             {/* Code pattern overlay */}
             <div className="absolute inset-0 opacity-5">
-              <div className="absolute top-20 left-10 font-mono text-sm text-foreground/50">
+              <div className="absolute top-20 left-10 font-mono text-sm text-foreground/50 hidden lg:block">
                 {`const developer = {`}<br />
                 {`  name: "${developerInfo.name}",`}<br />
                 {`  role: "Full Stack Developer"`}<br />
                 {`};`}
               </div>
-              <div className="absolute bottom-32 right-16 font-mono text-sm text-foreground/50 hidden md:block">
+              <div className="absolute bottom-32 right-16 font-mono text-sm text-foreground/50 hidden lg:block">
                 {`@RestController`}<br />
                 {`public class Portfolio {`}<br />
                 {`  @GetMapping("/skills")`}<br />
@@ -53,78 +53,104 @@ export default function Home() {
           </div>
 
           {/* Hero Content */}
-          <div className="relative h-full flex flex-col items-center justify-center px-6">
-            <motion.div
-              className="text-center space-y-6 max-w-4xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            >
+          <div className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20">
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 max-w-6xl w-full">
+              {/* Profile Photo */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
+                className="relative flex-shrink-0"
+                initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.1 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
               >
-                <Badge variant="secondary" className="mb-4 text-sm px-4 py-1">
-                  👋 Welcome to my portfolio
-                </Badge>
+                <div className="relative">
+                  {/* Glow effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary/20 rounded-full blur-2xl scale-110" />
+                  {/* Photo container */}
+                  <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
+                    <img
+                      src={developerInfo.profileImage}
+                      alt={developerInfo.name}
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                  {/* Decorative ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-primary/20 scale-125 animate-pulse" />
+                </div>
               </motion.div>
 
-              <motion.h1
-                className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
-              >
-                Hi, I'm{' '}
-                <span className="text-primary bg-gradient-to-r from-primary to-primary/60 bg-clip-text">
-                  {developerInfo.name.split(' ')[0]}
-                </span>
-              </motion.h1>
-              
-              <motion.p
-                className="text-xl md:text-2xl font-medium tracking-wide text-muted-foreground"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.4 }}
-              >
-                {developerInfo.tagline}
-              </motion.p>
-
-              <motion.p
-                className="text-base md:text-lg font-light leading-relaxed text-muted-foreground max-w-2xl mx-auto"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.6 }}
-              >
-                {developerInfo.heroIntroduction}
-              </motion.p>
-
+              {/* Text Content */}
               <motion.div
-                className="flex flex-wrap justify-center gap-4 pt-4"
-                initial={{ opacity: 0, y: 20 }}
+                className="text-center lg:text-left space-y-4 sm:space-y-6 max-w-2xl"
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, delay: 0.8 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               >
-                <Link
-                  to="/portfolio"
-                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
                 >
-                  View My Work
-                  <ArrowRight className="size-4" />
-                </Link>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-lg font-medium hover:bg-accent transition-colors"
+                  <Badge variant="secondary" className="mb-2 sm:mb-4 text-xs sm:text-sm px-3 sm:px-4 py-1">
+                    👋 Welcome to my portfolio
+                  </Badge>
+                </motion.div>
+
+                <motion.h1
+                  className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.4 }}
                 >
-                  Get in Touch
-                </Link>
+                  Hi, I'm{' '}
+                  <span className="text-primary bg-gradient-to-r from-primary to-primary/60 bg-clip-text">
+                    {developerInfo.name.split(' ')[0]}
+                  </span>
+                </motion.h1>
+                
+                <motion.p
+                  className="text-lg sm:text-xl md:text-2xl font-medium tracking-wide text-muted-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                >
+                  {developerInfo.tagline}
+                </motion.p>
+
+                <motion.p
+                  className="text-sm sm:text-base md:text-lg font-light leading-relaxed text-muted-foreground"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.6 }}
+                >
+                  {developerInfo.heroIntroduction}
+                </motion.p>
+
+                <motion.div
+                  className="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 pt-2 sm:pt-4"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.7 }}
+                >
+                  <Link
+                    to="/portfolio"
+                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base"
+                  >
+                    View My Work
+                    <ArrowRight className="size-4" />
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 border border-border px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-accent transition-colors text-sm sm:text-base"
+                  >
+                    Get in Touch
+                  </Link>
+                </motion.div>
               </motion.div>
-            </motion.div>
+            </div>
 
             {/* Scroll Indicator */}
             <motion.div
-              className="absolute bottom-12"
+              className="absolute bottom-8 sm:bottom-12"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.8 }}
@@ -134,31 +160,72 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Skills Section */}
-        <section className="py-24 md:py-32 px-6 lg:px-8 bg-accent/30">
+        {/* Experience/Internships Section */}
+        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-accent/30">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-16 space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+              <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                  Professional Experience
+                </h2>
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Hands-on internship experience with industry leaders
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+              {developerInfo.experience.map((exp, index) => (
+                <ScrollReveal key={exp.company} delay={index * 0.1}>
+                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-all hover:shadow-lg h-full">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-primary/10 rounded-lg text-primary flex-shrink-0">
+                        <Briefcase className="size-5 sm:size-6" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-base sm:text-lg text-foreground">{exp.title}</h3>
+                        <p className="text-primary font-medium text-sm sm:text-base">{exp.company}</p>
+                        <div className="flex items-center gap-2 mt-1 text-muted-foreground text-xs sm:text-sm">
+                          <Calendar className="size-3 sm:size-4" />
+                          <span>{exp.period}</span>
+                        </div>
+                        <p className="mt-2 sm:mt-3 text-muted-foreground text-sm leading-relaxed">
+                          {exp.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-border">
+          <div className="max-w-6xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                   Technical Skills
                 </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
                   Building robust applications with modern technologies
                 </p>
               </div>
             </ScrollReveal>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
               {developerInfo.skills.map((skill, index) => (
                 <ScrollReveal key={skill.name} delay={index * 0.1}>
-                  <div className="bg-background border border-border rounded-lg p-6 hover:border-primary/50 transition-colors h-full">
-                    <div className="flex items-center gap-3 mb-4">
+                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-colors h-full">
+                    <div className="flex items-center gap-3 mb-3 sm:mb-4">
                       <div className="p-2 bg-primary/10 rounded-lg text-primary">
                         {skillIcons[skill.name]}
                       </div>
-                      <h3 className="font-semibold">{skill.name}</h3>
+                      <h3 className="font-semibold text-sm sm:text-base">{skill.name}</h3>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {skill.items.map((item) => (
                         <Badge key={item} variant="secondary" className="text-xs">
                           {item}
@@ -173,21 +240,21 @@ export default function Home() {
         </section>
 
         {/* Featured Projects Section */}
-        <section className="py-24 md:py-32 border-t border-border">
+        <section className="py-16 sm:py-24 md:py-32 border-t border-border bg-accent/30">
           {/* Section Header */}
           <ScrollReveal>
-            <div className="text-center mb-16 space-y-4 px-6">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4 px-4 sm:px-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                 Featured Projects
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base sm:text-lg text-muted-foreground">
                 A selection of my recent full-stack work
               </p>
             </div>
           </ScrollReveal>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 max-w-7xl mx-auto">
             {featuredProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -201,32 +268,32 @@ export default function Home() {
 
           {/* View All Link */}
           <ScrollReveal delay={0.4}>
-            <div className="flex justify-center mt-16 px-6">
+            <div className="flex justify-center mt-12 sm:mt-16 px-4 sm:px-6">
               <Link
                 to="/portfolio"
-                className="group inline-flex items-center gap-2 text-lg font-medium text-foreground hover:text-primary transition-colors"
+                className="group inline-flex items-center gap-2 text-base sm:text-lg font-medium text-foreground hover:text-primary transition-colors"
               >
                 <span>View All Projects</span>
-                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="size-4 sm:size-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
           </ScrollReveal>
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 md:py-32 bg-primary/5 border-t border-border">
+        <section className="py-16 sm:py-24 md:py-32 bg-primary/5 border-t border-border">
           <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center px-6 space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            <div className="max-w-3xl mx-auto text-center px-4 sm:px-6 space-y-4 sm:space-y-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                 Let's Build Something Together
               </h2>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base sm:text-lg text-muted-foreground">
                 I'm currently open to full-time opportunities and interesting projects. Let's connect!
               </p>
-              <div className="flex flex-wrap justify-center gap-4">
+              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base"
                 >
                   Get in Touch
                   <ArrowRight className="size-4" />
@@ -235,7 +302,7 @@ export default function Home() {
                   href={developerInfo.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-lg font-medium hover:bg-accent transition-colors"
+                  className="inline-flex items-center gap-2 border border-border px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-accent transition-colors text-sm sm:text-base"
                 >
                   View GitHub
                 </a>
