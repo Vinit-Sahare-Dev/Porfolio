@@ -32,8 +32,33 @@ export default function Home() {
         <section className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-background via-background to-primary/5">
           {/* Animated background elements */}
           <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl animate-pulse delay-1000" />
+            {/* Dynamic gradient orbs */}
+            <motion.div 
+              className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-primary/20 to-primary/5 rounded-full blur-3xl"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                x: [0, 50, 0],
+                y: [0, -30, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div 
+              className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-tl from-primary/15 to-transparent rounded-full blur-3xl"
+              animate={{ 
+                scale: [1, 0.8, 1],
+                x: [0, -40, 0],
+                y: [0, 40, 0]
+              }}
+              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            <motion.div 
+              className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl"
+              animate={{ 
+                scale: [0.9, 1.1, 0.9],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
             {/* Code pattern overlay */}
             <div className="absolute inset-0 opacity-5">
               <div className="absolute top-20 left-10 font-mono text-sm text-foreground/50 hidden lg:block">
@@ -55,26 +80,67 @@ export default function Home() {
           {/* Hero Content */}
           <div className="relative min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-20">
             <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16 max-w-6xl w-full">
-              {/* Profile Photo */}
+              {/* Profile Photo with Dynamic Background */}
               <motion.div
                 className="relative flex-shrink-0"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
               >
                 <div className="relative">
-                  {/* Glow effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/40 to-primary/20 rounded-full blur-2xl scale-110" />
-                  {/* Photo container */}
-                  <div className="relative w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-full overflow-hidden border-4 border-primary/30 shadow-2xl">
-                    <img
+                  {/* Animated gradient background behind photo */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-br from-primary via-primary/60 to-primary/30 rounded-full blur-xl opacity-70 scale-110"
+                    animate={{ 
+                      scale: [1.1, 1.2, 1.1],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  />
+                  {/* Secondary glow */}
+                  <motion.div 
+                    className="absolute -inset-8 sm:-inset-12 bg-gradient-to-tr from-primary/40 to-transparent rounded-full blur-2xl"
+                    animate={{ 
+                      opacity: [0.5, 0.8, 0.5],
+                      scale: [0.95, 1.15, 0.95]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                  />
+                  {/* Photo container - circular with gradient backdrop */}
+                  <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
+                    {/* Inner gradient background */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5" />
+                    <motion.img
                       src={developerInfo.profileImage}
                       alt={developerInfo.name}
-                      className="w-full h-full object-cover object-center"
+                      className="relative w-full h-full object-cover object-top drop-shadow-2xl"
+                      initial={{ scale: 1 }}
+                      animate={{ scale: [1, 1.02, 1] }}
+                      transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     />
                   </div>
+                  {/* Decorative floating elements */}
+                  <motion.div 
+                    className="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full shadow-lg"
+                    animate={{ y: [-5, 5, -5], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  />
+                  <motion.div 
+                    className="absolute -bottom-4 -left-4 w-3 h-3 bg-primary/60 rounded-full shadow-md"
+                    animate={{ y: [5, -5, 5], opacity: [0.3, 0.8, 0.3] }}
+                    transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
+                  />
+                  <motion.div 
+                    className="absolute top-1/2 -right-6 w-2 h-2 bg-primary/40 rounded-full"
+                    animate={{ x: [-3, 3, -3], opacity: [0.4, 1, 0.4] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                  />
                   {/* Decorative ring */}
-                  <div className="absolute inset-0 rounded-full border-2 border-primary/20 scale-125 animate-pulse" />
+                  <motion.div 
+                    className="absolute inset-0 rounded-full border-2 border-primary/30 scale-110"
+                    animate={{ rotate: [0, 360] }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                  />
                 </div>
               </motion.div>
 
