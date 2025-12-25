@@ -133,6 +133,39 @@ export const projects: Project[] = [
         aspectRatio: 'landscape'
       }
     ]
+  },
+  {
+    id: '5',
+    title: 'ChessM8 Game',
+    category: 'frontend',
+    year: '2024',
+    slug: 'chessm8-game',
+    coverImage: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    description: 'A modern React-based chess game web app featuring smooth gameplay, clean interface, and responsive design. Enjoy classic chess in your browser with move highlights, undo/reset controls, and expandability for new features.',
+    techStack: ['React', 'TypeScript', 'Vite', 'CSS3', 'Game Logic'],
+    features: [
+      'Smooth chess gameplay',
+      'Move highlighting system',
+      'Undo/Reset controls',
+      'Responsive design',
+      'Clean modern interface',
+      'Expandable architecture'
+    ],
+    github: 'https://github.com/Vinit-Sahare-Dev/ChessM8',
+    images: [
+      {
+        id: '5-1',
+        src: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'ChessM8 game interface',
+        aspectRatio: 'landscape'
+      },
+      {
+        id: '5-2',
+        src: 'https://images.unsplash.com/photo-1560174038-da43ac74f01b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Chess gameplay view',
+        aspectRatio: 'landscape'
+      }
+    ]
   }
 ];
 
@@ -147,9 +180,9 @@ export const getProjectsByCategory = (category: string): Project[] => {
   return projects.filter(project => project.category === category);
 };
 
-// Helper function to get featured projects (first 4)
+// Helper function to get featured projects (first 5)
 export const getFeaturedProjects = (): Project[] => {
-  return projects.slice(0, 4);
+  return projects.slice(0, 5);
 };
 
 // Helper function to get next/previous project
