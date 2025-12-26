@@ -8,6 +8,7 @@ import { SEOHead } from '@/components/seo/SEOHead';
 import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { GitHubActivity } from '@/components/github/GitHubActivity';
 
 const skillIcons: Record<string, React.ReactNode> = {
   'Frontend': <Code2 className="size-5" />,
@@ -302,6 +303,26 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* GitHub Activity Section */}
+        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-accent/30 border-t border-border">
+          <div className="max-w-5xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-8 sm:mb-12 space-y-3">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                  Open Source Activity
+                </h2>
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Real-time contribution data from GitHub
+                </p>
+              </div>
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.2}>
+              <GitHubActivity />
+            </ScrollReveal>
           </div>
         </section>
 
