@@ -227,48 +227,65 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Experience/Internships Section */}
-        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-accent/30">
-          <div className="max-w-6xl mx-auto">
+        {/* GitHub Activity Section - FIRST */}
+        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-[#0d1117]">
+          <div className="max-w-5xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                  Professional Experience
+              <div className="text-center mb-8 sm:mb-12 space-y-3">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white">
+                  Open Source Activity
                 </h2>
-                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Hands-on internship experience with industry leaders
+                <p className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto">
+                  Real-time contribution data from GitHub
                 </p>
               </div>
             </ScrollReveal>
-
-            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
-              {developerInfo.experience.map((exp, index) => (
-                <ScrollReveal key={exp.company} delay={index * 0.1}>
-                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-all hover:shadow-lg h-full">
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="p-2 sm:p-3 bg-primary/10 rounded-lg text-primary flex-shrink-0">
-                        <Briefcase className="size-5 sm:size-6" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-base sm:text-lg text-foreground">{exp.title}</h3>
-                        <p className="text-primary font-medium text-sm sm:text-base">{exp.company}</p>
-                        <div className="flex items-center gap-2 mt-1 text-muted-foreground text-xs sm:text-sm">
-                          <Calendar className="size-3 sm:size-4" />
-                          <span>{exp.period}</span>
-                        </div>
-                        <p className="mt-2 sm:mt-3 text-muted-foreground text-sm leading-relaxed">
-                          {exp.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
+            
+            <ScrollReveal delay={0.2}>
+              <GitHubActivity />
+            </ScrollReveal>
           </div>
         </section>
 
-        {/* Skills Section */}
+        {/* Featured Projects Section - SECOND */}
+        <section className="py-16 sm:py-24 md:py-32 border-t border-border bg-accent/30">
+          <ScrollReveal>
+            <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4 px-4 sm:px-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
+                Featured Projects
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground">
+                A selection of my recent full-stack work
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 max-w-7xl mx-auto">
+            {featuredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                aspectRatio="landscape"
+                showCategory={true}
+                index={index}
+              />
+            ))}
+          </div>
+
+          <ScrollReveal delay={0.4}>
+            <div className="flex justify-center mt-12 sm:mt-16 px-4 sm:px-6">
+              <Link
+                to="/portfolio"
+                className="group inline-flex items-center gap-2 text-base sm:text-lg font-medium text-foreground hover:text-primary transition-colors"
+              >
+                <span>View All Projects</span>
+                <ArrowRight className="size-4 sm:size-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </ScrollReveal>
+        </section>
+
+        {/* Skills Section - THIRD */}
         <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-border">
           <div className="max-w-6xl mx-auto">
             <ScrollReveal>
@@ -306,65 +323,45 @@ export default function Home() {
           </div>
         </section>
 
-        {/* GitHub Activity Section */}
-        <section className="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-accent/30 border-t border-border">
-          <div className="max-w-5xl mx-auto">
+        {/* Experience/Internships Section - FOURTH */}
+        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 bg-accent/30 border-t border-border">
+          <div className="max-w-6xl mx-auto">
             <ScrollReveal>
-              <div className="text-center mb-8 sm:mb-12 space-y-3">
+              <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                  Open Source Activity
+                  Professional Experience
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Real-time contribution data from GitHub
+                  Hands-on internship experience with industry leaders
                 </p>
               </div>
             </ScrollReveal>
-            
-            <ScrollReveal delay={0.2}>
-              <GitHubActivity />
-            </ScrollReveal>
-          </div>
-        </section>
 
-        {/* Featured Projects Section */}
-        <section className="py-16 sm:py-24 md:py-32 border-t border-border bg-accent/30">
-          {/* Section Header */}
-          <ScrollReveal>
-            <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4 px-4 sm:px-6">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                Featured Projects
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground">
-                A selection of my recent full-stack work
-              </p>
+            <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
+              {developerInfo.experience.map((exp, index) => (
+                <ScrollReveal key={exp.company} delay={index * 0.1}>
+                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-all hover:shadow-lg h-full">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="p-2 sm:p-3 bg-primary/10 rounded-lg text-primary flex-shrink-0">
+                        <Briefcase className="size-5 sm:size-6" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-semibold text-base sm:text-lg text-foreground">{exp.title}</h3>
+                        <p className="text-primary font-medium text-sm sm:text-base">{exp.company}</p>
+                        <div className="flex items-center gap-2 mt-1 text-muted-foreground text-xs sm:text-sm">
+                          <Calendar className="size-3 sm:size-4" />
+                          <span>{exp.period}</span>
+                        </div>
+                        <p className="mt-2 sm:mt-3 text-muted-foreground text-sm leading-relaxed">
+                          {exp.description}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </ScrollReveal>
+              ))}
             </div>
-          </ScrollReveal>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-6 max-w-7xl mx-auto">
-            {featuredProjects.map((project, index) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                aspectRatio="landscape"
-                showCategory={true}
-                index={index}
-              />
-            ))}
           </div>
-
-          {/* View All Link */}
-          <ScrollReveal delay={0.4}>
-            <div className="flex justify-center mt-12 sm:mt-16 px-4 sm:px-6">
-              <Link
-                to="/portfolio"
-                className="group inline-flex items-center gap-2 text-base sm:text-lg font-medium text-foreground hover:text-primary transition-colors"
-              >
-                <span>View All Projects</span>
-                <ArrowRight className="size-4 sm:size-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </ScrollReveal>
         </section>
 
         {/* CTA Section */}
