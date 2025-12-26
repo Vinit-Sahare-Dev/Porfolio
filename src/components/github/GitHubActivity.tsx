@@ -41,31 +41,24 @@ async function fetchGitHubContributions(): Promise<GitHubStats> {
     const totalContributions = data.total?.lastYear || contributions.reduce((sum, day) => sum + day.count, 0);
     const activeDays = contributions.filter(day => day.count > 0).length;
     
-    // Calculate current streak from today backwards
+    // Calculate current streak - count consecutive days with contributions from most recent
     let currentStreak = 0;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Sort by date descending
-    const sortedContributions = [...contributions].sort((a, b) => 
+    // Sort by date descending (most recent first)
+    const sortedDesc = [...contributions].sort((a, b) => 
       new Date(b.date).getTime() - new Date(a.date).getTime()
     );
     
-    // Check if today or yesterday has contributions, then count streak
-    for (let i = 0; i < sortedContributions.length; i++) {
-      const dayDate = new Date(sortedContributions[i].date);
-      dayDate.setHours(0, 0, 0, 0);
-      
-      // Skip future dates
-      if (dayDate > today) continue;
-      
-      if (sortedContributions[i].count > 0) {
+    // Find the streak starting from the most recent day with contributions
+    let foundFirstContribution = false;
+    for (const day of sortedDesc) {
+      if (day.count > 0) {
+        foundFirstContribution = true;
         currentStreak++;
-      } else {
-        // Allow one day gap (today might not have contributions yet)
-        const diffDays = Math.floor((today.getTime() - dayDate.getTime()) / (1000 * 60 * 60 * 24));
-        if (diffDays <= 1 && i === 0) continue;
-        break;
+      } else if (foundFirstContribution) {
+        break; // Streak broken
       }
     }
     
@@ -99,30 +92,16 @@ async function fetchGitHubContributions(): Promise<GitHubStats> {
 }
 
 function generatePlaceholderData(): GitHubStats {
-  const days: ContributionDay[] = [];
-  const today = new Date();
-  
-  for (let i = 365; i >= 0; i--) {
-    const date = new Date(today);
-    date.setDate(date.getDate() - i);
-    const count = Math.random() > 0.6 ? Math.floor(Math.random() * 10) : 0;
-    days.push({
-      date: date.toISOString().split('T')[0],
-      count,
-      level: count === 0 ? 0 : count < 3 ? 1 : count < 6 ? 2 : count < 9 ? 3 : 4
-    });
-  }
-  
   return {
-    totalContributions: days.reduce((sum, d) => sum + d.count, 0),
-    activeDays: days.filter(d => d.count > 0).length,
+    totalContributions: 260,
+    activeDays: 97,
     currentStreak: 0,
     longestStreak: 0,
-    contributionDays: days
+    contributionDays: []
   };
 }
 
-const levelColors = {
+const levelColors: Record<number, string> = {
   0: 'bg-[#161b22]',
   1: 'bg-[#0e4429]',
   2: 'bg-[#006d32]',
@@ -141,60 +120,85 @@ export function GitHubActivity() {
     });
   }, []);
 
-  // Group contributions by week, matching GitHub's calendar layout
-  const getWeeksWithMonths = () => {
-    if (!stats || stats.contributionDays.length === 0) return { weeks: [], monthLabels: [] };
-    
+  // Build the contribution grid exactly like GitHub does
+  const buildGrid = () => {
+    if (!stats || stats.contributionDays.length === 0) {
+      return { weeks: [], monthLabels: [] };
+    }
+
     // Sort contributions by date ascending
     const sorted = [...stats.contributionDays].sort((a, b) => 
       new Date(a.date).getTime() - new Date(b.date).getTime()
     );
+
+    // Create a map for quick lookup
+    const contributionMap = new Map<string, ContributionDay>();
+    sorted.forEach(day => {
+      contributionMap.set(day.date, day);
+    });
+
+    // Get the date range - from first day in data to last day
+    const firstDate = new Date(sorted[0].date);
+    const lastDate = new Date(sorted[sorted.length - 1].date);
     
+    // Adjust to start from the Sunday of the week containing the first date
+    const startDate = new Date(firstDate);
+    startDate.setDate(startDate.getDate() - startDate.getDay());
+    
+    // Build weeks array (each week is an array of 7 days, Sun-Sat)
     const weeks: ContributionDay[][] = [];
     const monthLabels: { month: string; weekIndex: number }[] = [];
+    let currentDate = new Date(startDate);
     let currentWeek: ContributionDay[] = [];
-    let lastMonth = -1;
-    
-    // Get the first day and pad to start of week (Sunday = 0)
-    const firstDate = new Date(sorted[0].date);
-    const firstDayOfWeek = firstDate.getDay();
-    
-    // Pad the first week with empty days
-    for (let i = 0; i < firstDayOfWeek; i++) {
-      currentWeek.push({ date: '', count: 0, level: 0 });
-    }
-    
-    sorted.forEach((day, index) => {
-      const date = new Date(day.date);
-      const dayOfWeek = date.getDay();
-      const month = date.getMonth();
+    let lastMonthSeen = -1;
+
+    while (currentDate <= lastDate) {
+      const dateStr = currentDate.toISOString().split('T')[0];
+      const dayOfWeek = currentDate.getDay();
+      const month = currentDate.getMonth();
       
-      // Track month changes
-      if (month !== lastMonth) {
+      // Track month labels at the start of each month
+      if (month !== lastMonthSeen && dayOfWeek === 0) {
         monthLabels.push({
-          month: date.toLocaleDateString('en-US', { month: 'short' }),
+          month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
           weekIndex: weeks.length
         });
-        lastMonth = month;
+        lastMonthSeen = month;
+      } else if (month !== lastMonthSeen && currentWeek.length === 0) {
+        // Also add month label if it's the first day we're processing for a new month
+        monthLabels.push({
+          month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
+          weekIndex: weeks.length
+        });
+        lastMonthSeen = month;
       }
       
-      currentWeek.push(day);
+      // Get contribution for this day or empty
+      const contribution = contributionMap.get(dateStr);
+      currentWeek.push(contribution || { date: dateStr, count: 0, level: 0 });
       
-      // End of week (Saturday) or last day
-      if (dayOfWeek === 6 || index === sorted.length - 1) {
-        // Pad remaining days if it's the last week
-        while (currentWeek.length < 7) {
-          currentWeek.push({ date: '', count: 0, level: 0 });
-        }
+      // End of week (Saturday)
+      if (dayOfWeek === 6) {
         weeks.push(currentWeek);
         currentWeek = [];
       }
-    });
+      
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
     
+    // Push remaining days
+    if (currentWeek.length > 0) {
+      // Pad to 7 days
+      while (currentWeek.length < 7) {
+        currentWeek.push({ date: '', count: 0, level: 0 });
+      }
+      weeks.push(currentWeek);
+    }
+
     return { weeks, monthLabels };
   };
 
-  const { weeks, monthLabels } = getWeeksWithMonths();
+  const { weeks, monthLabels } = buildGrid();
 
   if (loading) {
     return (
@@ -221,7 +225,7 @@ export function GitHubActivity() {
       transition={{ duration: 0.6 }}
     >
       {/* Animated background glow */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
           className="absolute -top-1/2 -right-1/2 w-full h-full bg-gradient-to-br from-emerald-500/10 to-transparent rounded-full blur-3xl"
           animate={{ 
@@ -282,9 +286,9 @@ export function GitHubActivity() {
           >
             <div className="flex items-center gap-2 text-emerald-400 mb-2">
               <Calendar className="size-4" />
-              <span className="text-xs font-medium uppercase tracking-wide">Active Days</span>
+              <span className="text-xs font-medium uppercase tracking-wide">Active</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.activeDays}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.activeDays} <span className="text-sm text-gray-500">days</span></p>
           </motion.div>
           
           <motion.div 
@@ -309,55 +313,32 @@ export function GitHubActivity() {
               <TrendingUp className="size-4" />
               <span className="text-xs font-medium uppercase tracking-wide">Best</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.longestStreak}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.longestStreak} <span className="text-sm text-gray-500">days</span></p>
           </motion.div>
         </div>
 
         {/* Contribution Grid */}
         <div className="overflow-x-auto pb-2 -mx-2 px-2">
-          <div className="min-w-[750px]">
-            {/* Month labels - positioned based on actual data */}
-            <div className="flex text-xs text-gray-500 mb-2 ml-8">
-              {monthLabels.map((label, i) => {
-                // Calculate position based on week index
-                const totalWeeks = weeks.length;
-                const leftPercent = (label.weekIndex / totalWeeks) * 100;
-                return (
-                  <span
-                    key={`${label.month}-${i}`}
-                    className="absolute"
-                    style={{ 
-                      left: `calc(32px + ${leftPercent}%)`,
-                      minWidth: '30px'
-                    }}
-                  >
-                    {label.month}
-                  </span>
-                );
-              })}
+          <div style={{ minWidth: `${Math.max(weeks.length * 14 + 40, 700)}px` }}>
+            {/* Month labels */}
+            <div className="flex text-xs text-gray-500 mb-1 ml-8 h-4">
+              {monthLabels.map((label, i) => (
+                <span
+                  key={`${label.month}-${i}-${label.weekIndex}`}
+                  className="absolute text-[11px]"
+                  style={{ 
+                    left: `calc(32px + ${label.weekIndex * 14}px)`,
+                  }}
+                >
+                  {label.month}
+                </span>
+              ))}
             </div>
             
-            {/* Simplified month row */}
-            <div className="relative h-5 mb-1 ml-8">
-              {monthLabels.map((label, i) => {
-                const totalWeeks = weeks.length;
-                const leftPercent = (label.weekIndex / totalWeeks) * 100;
-                return (
-                  <span
-                    key={`${label.month}-${i}`}
-                    className="absolute text-xs text-gray-500"
-                    style={{ left: `${leftPercent}%` }}
-                  >
-                    {label.month}
-                  </span>
-                );
-              })}
-            </div>
-            
-            {/* Grid */}
-            <div className="flex gap-[3px]">
+            {/* Grid with day labels */}
+            <div className="flex gap-[3px] relative mt-4">
               {/* Day labels */}
-              <div className="flex flex-col gap-[3px] text-[10px] text-gray-500 pr-2 w-6">
+              <div className="flex flex-col gap-[3px] text-[10px] text-gray-500 pr-1 w-7 flex-shrink-0">
                 <span className="h-[11px]"></span>
                 <span className="h-[11px] leading-[11px]">Mon</span>
                 <span className="h-[11px]"></span>
@@ -368,7 +349,7 @@ export function GitHubActivity() {
               </div>
               
               {/* Contribution cells */}
-              <div className="flex gap-[3px] flex-1">
+              <div className="flex gap-[3px]">
                 {weeks.map((week, weekIndex) => (
                   <div key={weekIndex} className="flex flex-col gap-[3px]">
                     {week.map((day, dayIndex) => (
@@ -378,15 +359,15 @@ export function GitHubActivity() {
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ 
-                          delay: weekIndex * 0.01,
-                          duration: 0.2 
+                          delay: weekIndex * 0.008,
+                          duration: 0.15 
                         }}
                         whileHover={{ 
                           scale: 1.8, 
                           zIndex: 10,
-                          boxShadow: day.count > 0 ? '0 0 8px rgba(57, 211, 83, 0.5)' : 'none'
+                          boxShadow: day.count > 0 ? '0 0 10px rgba(57, 211, 83, 0.6)' : 'none'
                         }}
-                        title={day.date ? `${day.count} contributions on ${new Date(day.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' })}` : ''}
+                        title={day.date ? `${day.count} contribution${day.count !== 1 ? 's' : ''} on ${new Date(day.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}` : ''}
                       />
                     ))}
                   </div>
@@ -400,7 +381,7 @@ export function GitHubActivity() {
               {[0, 1, 2, 3, 4].map((level) => (
                 <div
                   key={level}
-                  className={`w-[11px] h-[11px] rounded-sm ${levelColors[level as 0 | 1 | 2 | 3 | 4]}`}
+                  className={`w-[11px] h-[11px] rounded-sm ${levelColors[level]}`}
                 />
               ))}
               <span>More</span>
