@@ -43,6 +43,12 @@ With hands-on experience from internships at Octal Net Services, Walmart Global 
       company: 'Walmart Global Tech & TCS',
       period: 'May 2024',
       description: 'Completed virtual internships applying software architecture, application design, and data structures, while transforming complex data into actionable insights and reports using business research and data visualization.'
+    },
+    {
+      title: 'Software Development Intern',
+      company: 'Verindia',
+      period: '2024',
+      description: 'Gained hands-on experience in software development practices, contributing to real-world projects and collaborating with cross-functional teams to deliver quality software solutions.'
     }
   ],
   education: [

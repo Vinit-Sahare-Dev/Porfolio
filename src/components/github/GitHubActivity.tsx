@@ -147,30 +147,36 @@ export function GitHubActivity() {
     
     // Build weeks array (each week is an array of 7 days, Sun-Sat)
     const weeks: ContributionDay[][] = [];
-    const monthLabels: { month: string; weekIndex: number }[] = [];
+    const monthLabels: { month: string; weekIndex: number; year: number }[] = [];
     let currentDate = new Date(startDate);
     let currentWeek: ContributionDay[] = [];
     let lastMonthSeen = -1;
+    let lastYearSeen = -1;
 
     while (currentDate <= lastDate) {
       const dateStr = currentDate.toISOString().split('T')[0];
       const dayOfWeek = currentDate.getDay();
       const month = currentDate.getMonth();
+      const year = currentDate.getFullYear();
       
       // Track month labels at the start of each month
       if (month !== lastMonthSeen && dayOfWeek === 0) {
         monthLabels.push({
           month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
-          weekIndex: weeks.length
+          weekIndex: weeks.length,
+          year
         });
         lastMonthSeen = month;
+        lastYearSeen = year;
       } else if (month !== lastMonthSeen && currentWeek.length === 0) {
         // Also add month label if it's the first day we're processing for a new month
         monthLabels.push({
           month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
-          weekIndex: weeks.length
+          weekIndex: weeks.length,
+          year
         });
         lastMonthSeen = month;
+        lastYearSeen = year;
       }
       
       // Get contribution for this day or empty
@@ -195,10 +201,19 @@ export function GitHubActivity() {
       weeks.push(currentWeek);
     }
 
-    return { weeks, monthLabels };
+    // Find the week index where year changes (from 2024 to 2025)
+    let yearGapIndex = -1;
+    for (let i = 1; i < monthLabels.length; i++) {
+      if (monthLabels[i].year > monthLabels[i - 1].year) {
+        yearGapIndex = monthLabels[i].weekIndex;
+        break;
+      }
+    }
+
+    return { weeks, monthLabels, yearGapIndex };
   };
 
-  const { weeks, monthLabels } = buildGrid();
+  const { weeks, monthLabels, yearGapIndex } = buildGrid();
 
   if (loading) {
     return (
@@ -319,20 +334,24 @@ export function GitHubActivity() {
 
         {/* Contribution Grid */}
         <div className="overflow-x-auto pb-2 -mx-2 px-2">
-          <div style={{ minWidth: `${Math.max(weeks.length * 14 + 40, 700)}px` }}>
+          <div style={{ minWidth: `${Math.max(weeks.length * 14 + (yearGapIndex > 0 ? 60 : 40), 700)}px` }}>
             {/* Month labels */}
-            <div className="flex text-xs text-gray-500 mb-1 ml-8 h-4">
-              {monthLabels.map((label, i) => (
-                <span
-                  key={`${label.month}-${i}-${label.weekIndex}`}
-                  className="absolute text-[11px]"
-                  style={{ 
-                    left: `calc(32px + ${label.weekIndex * 14}px)`,
-                  }}
-                >
-                  {label.month}
-                </span>
-              ))}
+            <div className="flex text-xs text-gray-500 mb-1 ml-8 h-4 relative">
+              {monthLabels.map((label, i) => {
+                // Calculate extra offset for months after year gap
+                const extraOffset = yearGapIndex > 0 && label.weekIndex >= yearGapIndex ? 20 : 0;
+                return (
+                  <span
+                    key={`${label.month}-${i}-${label.weekIndex}`}
+                    className="absolute text-[11px]"
+                    style={{ 
+                      left: `calc(${(label.weekIndex + 1) * 14 + extraOffset}px)`,
+                    }}
+                  >
+                    {label.month}
+                  </span>
+                );
+              })}
             </div>
             
             {/* Grid with day labels */}
@@ -351,7 +370,10 @@ export function GitHubActivity() {
               {/* Contribution cells */}
               <div className="flex gap-[3px]">
                 {weeks.map((week, weekIndex) => (
-                  <div key={weekIndex} className="flex flex-col gap-[3px]">
+                  <div 
+                    key={weekIndex} 
+                    className={`flex flex-col gap-[3px] ${yearGapIndex > 0 && weekIndex === yearGapIndex ? 'ml-5' : ''}`}
+                  >
                     {week.map((day, dayIndex) => (
                       <motion.div
                         key={`${weekIndex}-${dayIndex}`}
