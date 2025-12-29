@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { developerInfo } from '@/data/developer';
 import { getFeaturedProjects } from '@/data/projects';
 import { ProjectCard } from '@/components/portfolio/ProjectCard';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar } from 'lucide-react';
+import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar, FileText, Download, X, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 const skillIcons: Record<string, React.ReactNode> = {
   'Frontend': <Code2 className="size-5" />,
@@ -382,6 +384,54 @@ export default function Home() {
                   Get in Touch
                   <ArrowRight className="size-4" />
                 </Link>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <motion.button
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:from-emerald-400 hover:to-teal-500 transition-all shadow-lg shadow-emerald-500/25 text-sm sm:text-base"
+                      whileHover={{ scale: 1.02, y: -2 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      <FileText className="size-4" />
+                      View Resume
+                    </motion.button>
+                  </DialogTrigger>
+                  <DialogContent className="max-w-4xl h-[85vh] p-0 overflow-hidden">
+                    <DialogHeader className="p-4 sm:p-6 border-b bg-gradient-to-r from-emerald-500/10 to-teal-600/10">
+                      <div className="flex items-center justify-between">
+                        <DialogTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                          <FileText className="size-5 text-emerald-500" />
+                          {developerInfo.name} - Resume
+                        </DialogTitle>
+                        <div className="flex items-center gap-2">
+                          <a
+                            href="/resume/VinitSahare_Resume.pdf"
+                            download="VinitSahare_Resume.pdf"
+                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                          >
+                            <Download className="size-4" />
+                            <span className="hidden sm:inline">Download</span>
+                          </a>
+                          <a
+                            href="/resume/VinitSahare_Resume.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 border border-border hover:bg-accent px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                          >
+                            <ExternalLink className="size-4" />
+                            <span className="hidden sm:inline">Open</span>
+                          </a>
+                        </div>
+                      </div>
+                    </DialogHeader>
+                    <div className="flex-1 h-full min-h-0">
+                      <iframe
+                        src="/resume/VinitSahare_Resume.pdf"
+                        className="w-full h-[calc(85vh-80px)]"
+                        title="Resume"
+                      />
+                    </div>
+                  </DialogContent>
+                </Dialog>
                 <a
                   href={developerInfo.socialLinks.github}
                   target="_blank"
