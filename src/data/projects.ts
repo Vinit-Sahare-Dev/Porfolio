@@ -166,6 +166,72 @@ export const projects: Project[] = [
         aspectRatio: 'landscape'
       }
     ]
+  },
+  {
+    id: '6',
+    title: 'ChronoMail Scheduler',
+    category: 'fullstack',
+    year: '2025',
+    slug: 'chronomail-scheduler',
+    coverImage: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    description: 'A smart email scheduling application built with React and Spring Boot that lets you compose emails now and schedule them for future delivery. Features an intuitive interface for automating email communication workflows.',
+    techStack: ['React', 'Spring Boot', 'Java', 'MySQL', 'REST APIs', 'Email Service', 'Scheduler'],
+    features: [
+      'Compose and schedule emails',
+      'Future delivery automation',
+      'Intuitive scheduling interface',
+      'Email template management',
+      'Delivery status tracking',
+      'RESTful API backend'
+    ],
+    github: 'https://github.com/Vinit-Sahare-Dev/ChronoMail',
+    images: [
+      {
+        id: '6-1',
+        src: 'https://images.unsplash.com/photo-1596526131083-e8c633c948d2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'ChronoMail email scheduling interface',
+        aspectRatio: 'landscape'
+      },
+      {
+        id: '6-2',
+        src: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Email composition view',
+        aspectRatio: 'landscape'
+      }
+    ]
+  },
+  {
+    id: '7',
+    title: 'Microservices Architecture',
+    category: 'backend',
+    year: '2025',
+    slug: 'microservices-demo',
+    coverImage: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    description: 'A production-ready microservices architecture demonstration showcasing service discovery, API gateway patterns, inter-service communication, and distributed system best practices using Spring Boot and Java.',
+    techStack: ['Java', 'Spring Boot', 'Spring Cloud', 'Eureka', 'API Gateway', 'Docker', 'REST APIs'],
+    features: [
+      'Service discovery with Eureka',
+      'API Gateway implementation',
+      'Inter-service communication',
+      'Load balancing',
+      'Circuit breaker patterns',
+      'Distributed configuration'
+    ],
+    github: 'https://github.com/Vinit-Sahare-Dev/Microservices',
+    images: [
+      {
+        id: '7-1',
+        src: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Microservices architecture diagram',
+        aspectRatio: 'landscape'
+      },
+      {
+        id: '7-2',
+        src: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Cloud infrastructure visualization',
+        aspectRatio: 'landscape'
+      }
+    ]
   }
 ];
 
