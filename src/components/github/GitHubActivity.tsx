@@ -333,19 +333,19 @@ export function GitHubActivity() {
         </div>
 
         {/* Contribution Grid */}
-        <div className="overflow-x-auto pb-2 -mx-2 px-2">
-          <div style={{ minWidth: `${Math.max(weeks.length * 14 + (yearGapIndex > 0 ? 60 : 40), 700)}px` }}>
+        <div className="overflow-x-auto pb-2 -mx-2 px-2 hide-scrollbar">
+          <div style={{ minWidth: `${Math.max(weeks.length * 13 + (yearGapIndex > 0 ? 50 : 30), 650)}px` }}>
             {/* Month labels */}
-            <div className="flex text-xs text-gray-500 mb-1 ml-8 h-4 relative">
+            <div className="flex text-xs text-gray-500 mb-1 ml-7 h-4 relative">
               {monthLabels.map((label, i) => {
                 // Calculate extra offset for months after year gap
-                const extraOffset = yearGapIndex > 0 && label.weekIndex >= yearGapIndex ? 20 : 0;
+                const extraOffset = yearGapIndex > 0 && label.weekIndex >= yearGapIndex ? 16 : 0;
                 return (
                   <span
                     key={`${label.month}-${i}-${label.weekIndex}`}
-                    className="absolute text-[11px]"
+                    className="absolute text-[10px] sm:text-[11px]"
                     style={{ 
-                      left: `calc(${(label.weekIndex + 1) * 14 + extraOffset}px)`,
+                      left: `calc(${(label.weekIndex + 1) * 13 + extraOffset}px)`,
                     }}
                   >
                     {label.month}
@@ -355,29 +355,29 @@ export function GitHubActivity() {
             </div>
             
             {/* Grid with day labels */}
-            <div className="flex gap-[3px] relative mt-4">
+            <div className="flex gap-[2px] sm:gap-[3px] relative mt-3">
               {/* Day labels */}
-              <div className="flex flex-col gap-[3px] text-[10px] text-gray-500 pr-1 w-7 flex-shrink-0">
-                <span className="h-[11px]"></span>
-                <span className="h-[11px] leading-[11px]">Mon</span>
-                <span className="h-[11px]"></span>
-                <span className="h-[11px] leading-[11px]">Wed</span>
-                <span className="h-[11px]"></span>
-                <span className="h-[11px] leading-[11px]">Fri</span>
-                <span className="h-[11px]"></span>
+              <div className="flex flex-col gap-[2px] sm:gap-[3px] text-[9px] sm:text-[10px] text-gray-500 pr-1 w-6 sm:w-7 flex-shrink-0">
+                <span className="h-[10px] sm:h-[11px]"></span>
+                <span className="h-[10px] sm:h-[11px] leading-[10px] sm:leading-[11px]">Mon</span>
+                <span className="h-[10px] sm:h-[11px]"></span>
+                <span className="h-[10px] sm:h-[11px] leading-[10px] sm:leading-[11px]">Wed</span>
+                <span className="h-[10px] sm:h-[11px]"></span>
+                <span className="h-[10px] sm:h-[11px] leading-[10px] sm:leading-[11px]">Fri</span>
+                <span className="h-[10px] sm:h-[11px]"></span>
               </div>
               
               {/* Contribution cells */}
-              <div className="flex gap-[3px]">
+              <div className="flex gap-[2px] sm:gap-[3px]">
                 {weeks.map((week, weekIndex) => (
                   <div 
                     key={weekIndex} 
-                    className={`flex flex-col gap-[3px] ${yearGapIndex > 0 && weekIndex === yearGapIndex ? 'ml-5' : ''}`}
+                    className={`flex flex-col gap-[2px] sm:gap-[3px] ${yearGapIndex > 0 && weekIndex === yearGapIndex ? 'ml-3 sm:ml-4' : ''}`}
                   >
                     {week.map((day, dayIndex) => (
                       <motion.div
                         key={`${weekIndex}-${dayIndex}`}
-                        className={`w-[11px] h-[11px] rounded-sm ${day.date ? levelColors[day.level] : 'bg-transparent'} cursor-pointer transition-all`}
+                        className={`w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-sm ${day.date ? levelColors[day.level] : 'bg-transparent'} cursor-pointer transition-all`}
                         initial={{ scale: 0, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         transition={{ 
@@ -398,12 +398,12 @@ export function GitHubActivity() {
             </div>
             
             {/* Legend */}
-            <div className="flex items-center justify-end gap-1.5 mt-4 text-xs text-gray-500">
+            <div className="flex items-center justify-end gap-1 sm:gap-1.5 mt-3 sm:mt-4 text-[10px] sm:text-xs text-gray-500">
               <span>Less</span>
               {[0, 1, 2, 3, 4].map((level) => (
                 <div
                   key={level}
-                  className={`w-[11px] h-[11px] rounded-sm ${levelColors[level]}`}
+                  className={`w-[10px] h-[10px] sm:w-[11px] sm:h-[11px] rounded-sm ${levelColors[level]}`}
                 />
               ))}
               <span>More</span>

@@ -10,7 +10,7 @@ import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar, Fil
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 
 const skillIcons: Record<string, React.ReactNode> = {
   'Frontend': <Code2 className="size-5" />,
@@ -292,6 +292,9 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <ScrollReveal>
               <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+                <Badge variant="secondary" className="mb-2">
+                  💻 Tech Stack
+                </Badge>
                 <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
                   Technical Skills
                 </h2>
@@ -301,24 +304,43 @@ export default function Home() {
               </div>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {developerInfo.skills.map((skill, index) => (
                 <ScrollReveal key={skill.name} delay={index * 0.1}>
-                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-colors h-full">
-                    <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                      <div className="p-2 bg-primary/10 rounded-lg text-primary">
-                        {skillIcons[skill.name]}
+                  <motion.div 
+                    className="group relative bg-gradient-to-br from-background to-accent/20 border border-border rounded-xl p-5 sm:p-6 hover:border-primary/50 transition-all duration-300 h-full overflow-hidden"
+                    whileHover={{ y: -4, scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {/* Background gradient on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="p-2.5 sm:p-3 bg-primary/10 rounded-xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                          {skillIcons[skill.name]}
+                        </div>
+                        <h3 className="font-semibold text-base sm:text-lg">{skill.name}</h3>
                       </div>
-                      <h3 className="font-semibold text-sm sm:text-base">{skill.name}</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {skill.items.map((item, itemIndex) => (
+                          <motion.div
+                            key={item}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: itemIndex * 0.05 }}
+                          >
+                            <Badge 
+                              variant="secondary" 
+                              className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 bg-background/80 border border-border/50 hover:bg-primary/10 hover:border-primary/30 transition-colors cursor-default"
+                            >
+                              {item}
+                            </Badge>
+                          </motion.div>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                      {skill.items.map((item) => (
-                        <Badge key={item} variant="secondary" className="text-xs">
-                          {item}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
+                  </motion.div>
                 </ScrollReveal>
               ))}
             </div>
@@ -387,7 +409,7 @@ export default function Home() {
                 <Dialog>
                   <DialogTrigger asChild>
                     <motion.button
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:from-emerald-400 hover:to-teal-500 transition-all shadow-lg shadow-emerald-500/25 text-sm sm:text-base"
+                      className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:from-emerald-400 hover:to-teal-500 transition-all shadow-lg shadow-emerald-500/25 text-sm sm:text-base"
                       whileHover={{ scale: 1.02, y: -2 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -395,18 +417,23 @@ export default function Home() {
                       View Resume
                     </motion.button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl h-[85vh] p-0 overflow-hidden">
+                  <DialogContent className="max-w-4xl w-[95vw] sm:w-full h-[85vh] sm:h-[90vh] p-0 overflow-hidden rounded-xl">
                     <DialogHeader className="p-4 sm:p-6 border-b bg-gradient-to-r from-emerald-500/10 to-teal-600/10">
-                      <div className="flex items-center justify-between">
-                        <DialogTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
-                          <FileText className="size-5 text-emerald-500" />
-                          {developerInfo.name} - Resume
-                        </DialogTitle>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div>
+                          <DialogTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                            <FileText className="size-5 text-emerald-500" />
+                            {developerInfo.name} - Resume
+                          </DialogTitle>
+                          <DialogDescription className="text-muted-foreground text-sm mt-1">
+                            View or download my professional resume
+                          </DialogDescription>
+                        </div>
                         <div className="flex items-center gap-2">
                           <a
                             href="/resume/VinitSahare_Resume.pdf"
                             download="VinitSahare_Resume.pdf"
-                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-primary-foreground px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
                           >
                             <Download className="size-4" />
                             <span className="hidden sm:inline">Download</span>
@@ -423,12 +450,27 @@ export default function Home() {
                         </div>
                       </div>
                     </DialogHeader>
-                    <div className="flex-1 h-full min-h-0">
-                      <iframe
-                        src="/resume/VinitSahare_Resume.pdf"
-                        className="w-full h-[calc(85vh-80px)]"
-                        title="Resume"
-                      />
+                    <div className="flex-1 h-full min-h-0 bg-muted/30">
+                      <object
+                        data="/resume/VinitSahare_Resume.pdf"
+                        type="application/pdf"
+                        className="w-full h-[calc(85vh-100px)] sm:h-[calc(90vh-100px)]"
+                      >
+                        <div className="flex flex-col items-center justify-center h-full gap-4 p-6 text-center">
+                          <FileText className="size-16 text-muted-foreground" />
+                          <p className="text-muted-foreground">
+                            Unable to display PDF in browser.
+                          </p>
+                          <a
+                            href="/resume/VinitSahare_Resume.pdf"
+                            download="VinitSahare_Resume.pdf"
+                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-primary-foreground px-4 py-2.5 rounded-lg font-medium transition-colors"
+                          >
+                            <Download className="size-4" />
+                            Download Resume
+                          </a>
+                        </div>
+                      </object>
                     </div>
                   </DialogContent>
                 </Dialog>

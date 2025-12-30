@@ -61,12 +61,12 @@ export function ProjectCard({
           
           {/* Overlay with gradient and text - always visible */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent transition-opacity duration-500">
-            <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2">
-              <h3 className="text-white text-xl md:text-2xl font-light tracking-wide">
+            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 space-y-1.5 sm:space-y-2">
+              <h3 className="text-white text-base sm:text-xl md:text-2xl font-medium tracking-wide line-clamp-2">
                 {project.title}
               </h3>
               {showCategory && (
-                <div className="flex items-center gap-3 text-sm text-white/80 font-light tracking-wide">
+                <div className="flex items-center gap-2 sm:gap-3 text-xs sm:text-sm text-white/80 font-light tracking-wide">
                   <span className="capitalize">{project.category}</span>
                   <span>•</span>
                   <span>{project.year}</span>
@@ -76,7 +76,7 @@ export function ProjectCard({
           </div>
 
           {/* Subtle hover border effect */}
-          <div className="absolute inset-0 border-2 border-white/10 group-hover:border-white/20 transition-colors duration-500" />
+          <div className="absolute inset-0 border-2 border-white/10 group-hover:border-white/20 transition-colors duration-500 rounded-sm" />
         </div>
       </Link>
     </motion.div>

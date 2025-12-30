@@ -104,6 +104,12 @@ All colors MUST be HSL.
 }
 
 @theme {
+  /* Font Families */
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-body: 'Inter', system-ui, sans-serif;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -180,8 +186,20 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+
+  code, pre {
+    @apply font-mono;
   }
 }
 
