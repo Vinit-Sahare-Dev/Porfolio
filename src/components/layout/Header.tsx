@@ -46,12 +46,7 @@ export function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className={cn(
-              'text-lg font-semibold tracking-wide transition-all duration-300',
-              isTransparent
-                ? 'text-white hover:text-white/80'
-                : 'text-foreground hover:text-foreground/80'
-            )}
+            className="text-lg font-semibold tracking-wide transition-all duration-300 text-foreground hover:text-foreground/80"
           >
             <motion.span
               initial={{ opacity: 0, x: -20 }}
@@ -76,11 +71,8 @@ export function Header() {
                   <Link
                     to={link.path}
                     className={cn(
-                      "relative text-sm font-medium tracking-wide transition-colors duration-300",
-                      isTransparent
-                        ? "text-white/90 hover:text-white"
-                        : "text-muted-foreground hover:text-foreground",
-                      location.pathname === link.path && (isTransparent ? "text-white" : "text-foreground")
+                      "relative text-sm font-medium tracking-wide transition-colors duration-300 text-muted-foreground hover:text-foreground",
+                      location.pathname === link.path && "text-foreground"
                     )}
                   >
                     {link.name}
@@ -88,10 +80,7 @@ export function Header() {
                     {location.pathname === link.path && (
                       <motion.div
                         layoutId="activeNav"
-                        className={cn(
-                          "absolute -bottom-1 left-0 right-0 h-0.5 rounded-full",
-                          isTransparent ? "bg-white" : "bg-primary"
-                        )}
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 rounded-full bg-primary"
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
@@ -115,10 +104,7 @@ export function Header() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={cn(
-                    'size-9',
-                    isTransparent && 'text-white hover:bg-white/10'
-                  )}
+                  className="size-9"
                   aria-label="Open menu"
                 >
                   <Menu className="size-5" />

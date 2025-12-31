@@ -408,7 +408,7 @@ export default function Home() {
                       View Resume
                     </motion.button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-4xl w-[95vw] sm:w-full h-[85vh] sm:h-[90vh] p-0 overflow-hidden rounded-xl">
+                  <DialogContent className="max-w-4xl w-[95vw] h-[80vh] p-0 overflow-hidden rounded-xl flex flex-col fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
                     <DialogHeader className="p-4 sm:p-6 border-b bg-gradient-to-r from-emerald-500/10 to-teal-600/10">
                       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                         <div>
