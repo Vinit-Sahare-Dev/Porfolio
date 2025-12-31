@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion } from 'framer-motion';
-import { Loader2, CheckCircle2 } from 'lucide-react';
+import { Loader2, CheckCircle2, MessageCircle } from 'lucide-react';
 import {
   Form,
   FormControl,
@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
+import { developerInfo } from '@/data/developer';
 
 // Validation schema with security best practices
 const contactFormSchema = z.object({
@@ -35,7 +36,7 @@ const contactFormSchema = z.object({
     .trim()
     .email({ message: 'Please enter a valid email address' })
     .max(255, { message: 'Email must be less than 255 characters' }),
-  projectType: z.enum(['editorial', 'commercial', 'personal'], {
+  projectType: z.enum(['fullstack', 'frontend', 'backend', 'consultation'], {
     required_error: 'Please select a project type',
   }),
   message: z
@@ -48,7 +49,7 @@ const contactFormSchema = z.object({
 type ContactFormValues = z.infer<typeof contactFormSchema>;
 
 /**
- * Contact form component with validation and error handling
+ * Contact form component with WhatsApp redirect
  * Uses react-hook-form + zod for type-safe validation
  */
 export function ContactForm() {
@@ -69,24 +70,27 @@ export function ContactForm() {
     setIsSubmitting(true);
     
     try {
-      // Formspree integration - replace YOUR_FORM_ID with your actual form ID
-      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          projectType: data.projectType,
-          message: data.message,
-          _subject: `New ${data.projectType} inquiry from ${data.name}`,
-        }),
-      });
+      // Format phone number (remove + and spaces)
+      const phoneNumber = developerInfo.phone.replace(/[\s+]/g, '');
+      
+      // Create WhatsApp message
+      const whatsappMessage = `Hi Vinit! 👋
 
-      if (!response.ok) {
-        throw new Error('Failed to send message');
-      }
+*New Project Inquiry*
+
+*Name:* ${data.name}
+*Email:* ${data.email}
+*Project Type:* ${data.projectType}
+
+*Message:*
+${data.message}`;
+
+      // Encode message for URL
+      const encodedMessage = encodeURIComponent(whatsappMessage);
+      
+      // Open WhatsApp
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      window.open(whatsappUrl, '_blank');
 
       // Show success state
       setIsSuccess(true);
@@ -98,7 +102,7 @@ export function ContactForm() {
       }, 5000);
     } catch (error) {
       form.setError('root', {
-        message: 'Failed to send message. Please try again.',
+        message: 'Failed to open WhatsApp. Please try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -121,9 +125,9 @@ export function ContactForm() {
         >
           <CheckCircle2 className="size-16 mx-auto text-green-600 dark:text-green-400" />
         </motion.div>
-        <h3 className="text-2xl font-light tracking-wide">Message Sent!</h3>
+        <h3 className="text-2xl font-light tracking-wide">Opening WhatsApp!</h3>
         <p className="text-muted-foreground font-light leading-relaxed">
-          Thank you for reaching out. I'll get back to you as soon as possible.
+          Your message is ready. Just hit send in WhatsApp to reach me.
         </p>
       </motion.div>
     );
@@ -191,14 +195,17 @@ export function ContactForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent className="bg-popover z-50">
-                  <SelectItem value="editorial" className="font-light">
-                    Editorial
+                  <SelectItem value="fullstack" className="font-light">
+                    Full Stack Development
                   </SelectItem>
-                  <SelectItem value="commercial" className="font-light">
-                    Commercial
+                  <SelectItem value="frontend" className="font-light">
+                    Frontend Development
                   </SelectItem>
-                  <SelectItem value="personal" className="font-light">
-                    Personal
+                  <SelectItem value="backend" className="font-light">
+                    Backend Development
+                  </SelectItem>
+                  <SelectItem value="consultation" className="font-light">
+                    Consultation
                   </SelectItem>
                 </SelectContent>
               </Select>
@@ -247,7 +254,10 @@ export function ContactForm() {
               Sending...
             </>
           ) : (
-            'Send Message'
+            <>
+              <MessageCircle className="mr-2 size-4" />
+              Send via WhatsApp
+            </>
           )}
         </Button>
       </form>
