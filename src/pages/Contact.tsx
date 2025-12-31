@@ -14,29 +14,29 @@ export default function Contact() {
       />
       
       <div className="min-h-screen">
-        <section className="py-24 md:py-32 px-6 lg:px-8 border-b border-border">
-          <div className="max-w-4xl mx-auto text-center space-y-6">
+        <section className="py-12 md:py-16 px-6 lg:px-8 border-b border-border">
+          <div className="max-w-4xl mx-auto text-center space-y-3">
             <motion.div initial={{ opacity: 0.8, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">Get in Touch</h1>
-              <p className="text-lg md:text-xl text-muted-foreground">Let's discuss your next project</p>
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Get in Touch</h1>
+              <p className="text-sm md:text-base text-muted-foreground">Let's discuss your next project</p>
             </motion.div>
           </div>
         </section>
 
-        <section className="py-16 md:py-24 px-6 lg:px-8">
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 lg:gap-16">
-            <motion.div className="space-y-6" initial={{ opacity: 0.8, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
-              <div className="space-y-3">
-                <h2 className="text-3xl md:text-4xl font-bold">Send a Message</h2>
-                <p className="text-muted-foreground">{developerInfo.availability}</p>
+        <section className="py-10 md:py-14 px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 lg:gap-12">
+            <motion.div className="space-y-5" initial={{ opacity: 0.8, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
+              <div className="space-y-2">
+                <h2 className="text-xl md:text-2xl font-semibold">Send a Message</h2>
+                <p className="text-sm text-muted-foreground">{developerInfo.availability}</p>
               </div>
               <ContactForm />
             </motion.div>
 
-            <motion.div className="space-y-8" initial={{ opacity: 0.8, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
-              <div className="space-y-3">
-                <h2 className="text-3xl md:text-4xl font-bold">Contact Info</h2>
-                <p className="text-muted-foreground">Reach out directly</p>
+            <motion.div className="space-y-6" initial={{ opacity: 0.8, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.1 }}>
+              <div className="space-y-2">
+                <h2 className="text-xl md:text-2xl font-semibold">Contact Info</h2>
+                <p className="text-sm text-muted-foreground">Reach out directly</p>
               </div>
               <Separator />
               <div className="space-y-6">
