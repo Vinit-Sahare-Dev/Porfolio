@@ -154,15 +154,6 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  <Badge variant="secondary" className="mb-2 sm:mb-4 text-xs sm:text-sm px-3 sm:px-4 py-1">
-                    👋 Welcome to my portfolio
-                  </Badge>
-                </motion.div>
 
                 <motion.h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-foreground"
