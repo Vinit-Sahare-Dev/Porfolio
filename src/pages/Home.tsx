@@ -6,11 +6,11 @@ import { ProjectCard } from '@/components/portfolio/ProjectCard';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar, FileText, Download, X, ExternalLink } from 'lucide-react';
+import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
+
 
 const skillIcons: Record<string, React.ReactNode> = {
   'Frontend': <Code2 className="size-5" />,
@@ -191,19 +191,23 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.7 }}
                 >
-                  <Link
-                    to="/portfolio"
-                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base"
-                  >
-                    View My Work
-                    <ArrowRight className="size-4" />
-                  </Link>
-                  <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-2 border border-border px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-accent transition-colors text-sm sm:text-base"
-                  >
-                    Get in Touch
-                  </Link>
+                <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      to="/portfolio"
+                      className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 text-sm sm:text-base"
+                    >
+                      View My Work
+                      <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border-2 border-border px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold hover:border-primary/50 hover:bg-accent/50 transition-all duration-300 text-sm sm:text-base"
+                    >
+                      Get in Touch
+                    </Link>
+                  </motion.div>
                 </motion.div>
               </motion.div>
             </div>
@@ -355,24 +359,31 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               {developerInfo.experience.map((exp, index) => (
                 <ScrollReveal key={exp.company} delay={index * 0.1}>
-                  <div className="bg-background border border-border rounded-lg p-5 sm:p-6 hover:border-primary/50 transition-all hover:shadow-lg h-full">
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="p-2 sm:p-3 bg-primary/10 rounded-lg text-primary flex-shrink-0">
+                  <motion.div 
+                    className="group bg-background border border-border rounded-xl p-5 sm:p-6 hover:border-primary/50 transition-all duration-300 h-full relative overflow-hidden"
+                    whileHover={{ y: -4, scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {/* Subtle gradient overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    
+                    <div className="relative flex items-start gap-3 sm:gap-4">
+                      <div className="p-2.5 sm:p-3 bg-primary/10 rounded-xl text-primary flex-shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                         <Briefcase className="size-5 sm:size-6" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-base sm:text-lg text-foreground">{exp.title}</h3>
                         <p className="text-primary font-medium text-sm sm:text-base">{exp.company}</p>
-                        <div className="flex items-center gap-2 mt-1 text-muted-foreground text-xs sm:text-sm">
+                        <div className="flex items-center gap-2 mt-1.5 text-muted-foreground text-xs sm:text-sm">
                           <Calendar className="size-3 sm:size-4" />
                           <span>{exp.period}</span>
                         </div>
-                        <p className="mt-2 sm:mt-3 text-muted-foreground text-sm leading-relaxed">
+                        <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
                           {exp.description}
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </ScrollReveal>
               ))}
             </div>
@@ -380,100 +391,75 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-16 sm:py-24 md:py-32 bg-primary/5 border-t border-border">
+        <section className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-primary/5 via-primary/10 to-background border-t border-border relative overflow-hidden">
+          {/* Subtle animated background */}
+          <motion.div 
+            className="absolute inset-0 opacity-30"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.3 }}
+            transition={{ duration: 1 }}
+          >
+            <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
+            <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-primary/15 rounded-full blur-2xl" />
+          </motion.div>
+          
           <ScrollReveal>
-            <div className="max-w-3xl mx-auto text-center px-4 sm:px-6 space-y-4 sm:space-y-6">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                Let's Build Something Together
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground">
+            <div className="relative max-w-3xl mx-auto text-center px-4 sm:px-6 space-y-6 sm:space-y-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
+                  Let's Build Something Together
+                </h2>
+              </motion.div>
+              <motion.p
+                className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
                 I'm currently open to full-time opportunities and interesting projects. Let's connect!
-              </p>
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors text-sm sm:text-base"
+              </motion.p>
+              <motion.div 
+                className="flex flex-wrap justify-center gap-3 sm:gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 text-sm sm:text-base"
+                  >
+                    Get in Touch
+                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                </motion.div>
+                
+                <motion.a
+                  href="/resume/VinitSahare_Resume.pdf"
+                  download="VinitSahare_Resume.pdf"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 transition-all duration-300 text-sm sm:text-base"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  Get in Touch
-                  <ArrowRight className="size-4" />
-                </Link>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <motion.button
-                      className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-primary-foreground px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:from-emerald-400 hover:to-teal-500 transition-all shadow-lg shadow-emerald-500/25 text-sm sm:text-base"
-                      whileHover={{ scale: 1.02, y: -2 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <FileText className="size-4" />
-                      View Resume
-                    </motion.button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-4xl w-[95vw] h-[80vh] p-0 overflow-hidden rounded-xl flex flex-col fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
-                    <DialogHeader className="p-4 sm:p-6 border-b bg-gradient-to-r from-emerald-500/10 to-teal-600/10">
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                        <div>
-                          <DialogTitle className="text-lg sm:text-xl font-semibold flex items-center gap-2">
-                            <FileText className="size-5 text-emerald-500" />
-                            {developerInfo.name} - Resume
-                          </DialogTitle>
-                          <DialogDescription className="text-muted-foreground text-sm mt-1">
-                            View or download my professional resume
-                          </DialogDescription>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <a
-                            href="/resume/VinitSahare_Resume.pdf"
-                            download="VinitSahare_Resume.pdf"
-                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-primary-foreground px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                          >
-                            <Download className="size-4" />
-                            <span className="hidden sm:inline">Download</span>
-                          </a>
-                          <a
-                            href="/resume/VinitSahare_Resume.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 border border-border hover:bg-accent px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                          >
-                            <ExternalLink className="size-4" />
-                            <span className="hidden sm:inline">Open</span>
-                          </a>
-                        </div>
-                      </div>
-                    </DialogHeader>
-                    <div className="flex-1 h-full min-h-0 bg-muted/30">
-                      <object
-                        data="/resume/VinitSahare_Resume.pdf"
-                        type="application/pdf"
-                        className="w-full h-[calc(85vh-100px)] sm:h-[calc(90vh-100px)]"
-                      >
-                        <div className="flex flex-col items-center justify-center h-full gap-4 p-6 text-center">
-                          <FileText className="size-16 text-muted-foreground" />
-                          <p className="text-muted-foreground">
-                            Unable to display PDF in browser.
-                          </p>
-                          <a
-                            href="/resume/VinitSahare_Resume.pdf"
-                            download="VinitSahare_Resume.pdf"
-                            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-primary-foreground px-4 py-2.5 rounded-lg font-medium transition-colors"
-                          >
-                            <Download className="size-4" />
-                            Download Resume
-                          </a>
-                        </div>
-                      </object>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-                <a
+                  <Download className="size-4" />
+                  Download Resume
+                </motion.a>
+                
+                <motion.a
                   href={developerInfo.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 border border-border px-4 sm:px-6 py-2.5 sm:py-3 rounded-lg font-medium hover:bg-accent transition-colors text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border-2 border-border px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold hover:border-primary/50 hover:bg-accent/50 transition-all duration-300 text-sm sm:text-base"
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   View GitHub
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
             </div>
           </ScrollReveal>
         </section>
