@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { FloatingWhatsApp } from '@/components/ui/FloatingWhatsApp';
+import { CustomCursor } from '@/components/ui/CustomCursor';
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,6 +20,7 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <CustomCursor />
       <Header />
       <main 
         id="main-content" 
@@ -27,6 +30,7 @@ export function Layout({ children }: LayoutProps) {
         {children}
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }
