@@ -1,10 +1,18 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("rounded-lg border bg-card text-card-foreground shadow-sm", className)} {...props} />
-));
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        "rounded-2xl border border-border bg-card text-card-foreground shadow-soft transition-all duration-300 hover:shadow-premium hover:border-primary/20",
+        className
+      )}
+      {...props}
+    />
+  )
+);
 Card.displayName = "Card";
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
@@ -40,4 +48,28 @@ const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 );
 CardFooter.displayName = "CardFooter";
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent };
+/* Premium Card Variants */
+
+const CardPremium = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("card-premium p-6", className)}
+      {...props}
+    />
+  )
+);
+CardPremium.displayName = "CardPremium";
+
+const CardGlass = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn("card-glass p-6", className)}
+      {...props}
+    />
+  )
+);
+CardGlass.displayName = "CardGlass";
+
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, CardPremium, CardGlass };
