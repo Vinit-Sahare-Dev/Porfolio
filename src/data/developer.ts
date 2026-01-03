@@ -80,7 +80,7 @@ With hands-on experience from internships at Octal Net Services, Walmart Global 
     'C and Java Programming Certificates | CCIT',
     'Completed virtual internships at Walmart & TATA (via Forage)'
   ],
-  location: 'India',
+  location: 'Hyderabad, India',
   email: 'vinit.sahare.dev@gmail.com',
   phone: '+91 9921349614',
   availability: 'Open to full-time opportunities',
