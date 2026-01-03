@@ -681,7 +681,10 @@
   }
 
   .card-glass {
-    @apply glass rounded-2xl border border-border/50;
+    @apply rounded-2xl border border-border/50;
+    background: hsla(var(--background) / 0.7);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
     box-shadow: var(--shadow-soft), var(--shadow-inner-glow);
   }
 
