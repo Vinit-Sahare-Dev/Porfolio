@@ -6,19 +6,17 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Layout } from "@/components/layout/Layout";
 import { SkipToContent } from "@/components/ui/SkipToContent";
-import { LoadingFallback } from "@/components/ui/LoadingFallback";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnimatePresence } from "framer-motion";
-import { lazy, Suspense } from "react";
 
-// Code-split route components for better performance
-const Index = lazy(() => import("./pages/Index"));
-const Portfolio = lazy(() => import("./pages/Portfolio"));
-const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+// Direct imports for instant navigation
+import Index from "./pages/Index";
+import Portfolio from "./pages/Portfolio";
+import ProjectDetail from "./pages/ProjectDetail";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
@@ -91,9 +89,7 @@ const App = () => (
           <BrowserRouter>
             <SkipToContent />
             <Layout>
-              <Suspense fallback={<LoadingFallback />}>
-                <AnimatedRoutes />
-              </Suspense>
+              <AnimatedRoutes />
             </Layout>
           </BrowserRouter>
         </TooltipProvider>
