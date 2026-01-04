@@ -14,6 +14,8 @@ import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
 import ProjectDetail from "./pages/ProjectDetail";
+import Blog from "./pages/Blog";
+import BlogPost from "./pages/BlogPost";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
@@ -47,6 +49,22 @@ function AnimatedRoutes() {
           element={
             <PageTransition>
               <ProjectDetail />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <PageTransition>
+              <Blog />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <PageTransition>
+              <BlogPost />
             </PageTransition>
           }
         />
