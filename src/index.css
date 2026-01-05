@@ -148,12 +148,11 @@
 }
 
 @theme {
-  /* Premium Font Families */
-  --font-sans: 'Sora', system-ui, sans-serif;
-  --font-display: 'Space Grotesk', 'Sora', system-ui, sans-serif;
+  /* Bold & Modern Font Families */
+  --font-sans: 'Satoshi', system-ui, sans-serif;
+  --font-display: 'Clash Display', 'Satoshi', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-  --font-body: 'Sora', system-ui, sans-serif;
-  --font-serif: 'Crimson Pro', Georgia, serif;
+  --font-body: 'Satoshi', system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
