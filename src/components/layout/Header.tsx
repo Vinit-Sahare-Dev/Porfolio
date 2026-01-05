@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Menu } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -6,6 +6,7 @@ import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { ThemeToggle } from './ThemeToggle';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { PrefetchLink } from '@/components/ui/PrefetchLink';
 import { developerInfo } from '@/data/developer';
 import { cn } from '@/lib/utils';
 
@@ -45,7 +46,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
-          <Link
+          <PrefetchLink
             to="/"
             className="text-lg font-semibold tracking-wide transition-all duration-300 text-foreground hover:text-foreground/80"
           >
@@ -58,7 +59,7 @@ export function Header() {
               <span className="text-primary font-mono">&lt;/&gt;</span>
               {developerInfo.name.split(' ')[0]}
             </motion.span>
-          </Link>
+          </PrefetchLink>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
@@ -69,7 +70,7 @@ export function Header() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 * index }}
                 >
-                  <Link
+                  <PrefetchLink
                     to={link.path}
                     className={cn(
                       "relative text-sm font-medium tracking-wide transition-colors duration-300 text-muted-foreground hover:text-foreground",
@@ -85,7 +86,7 @@ export function Header() {
                         transition={{ type: "spring", stiffness: 380, damping: 30 }}
                       />
                     )}
-                  </Link>
+                  </PrefetchLink>
                 </motion.div>
               ))}
             <motion.div
@@ -114,14 +115,14 @@ export function Header() {
               <SheetContent side="right" className="w-full sm:w-80">
                 <nav className="flex flex-col gap-6 mt-8">
                   {navLinks.map((link) => (
-                    <Link
+                    <PrefetchLink
                       key={link.path}
                       to={link.path}
                       onClick={() => setMobileMenuOpen(false)}
                       className="text-lg font-medium tracking-wide text-foreground hover:text-foreground/80"
                     >
                       {link.name}
-                    </Link>
+                    </PrefetchLink>
                   ))}
                 </nav>
               </SheetContent>
