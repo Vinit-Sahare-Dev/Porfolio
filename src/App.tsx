@@ -9,6 +9,7 @@ import { SkipToContent } from "@/components/ui/SkipToContent";
 import { PageTransition } from "@/components/ui/PageTransition";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AnimatePresence } from "framer-motion";
+import { useServiceWorker } from "@/hooks/useServiceWorker";
 
 // Direct imports for instant navigation
 import Index from "./pages/Index";
@@ -24,6 +25,7 @@ const queryClient = new QueryClient();
 
 function AnimatedRoutes() {
   const location = useLocation();
+  useServiceWorker();
 
   return (
     <AnimatePresence mode="wait">
