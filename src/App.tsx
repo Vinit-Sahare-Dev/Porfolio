@@ -15,6 +15,7 @@ import { useServiceWorker } from "@/hooks/useServiceWorker";
 import Index from "./pages/Index";
 import Portfolio from "./pages/Portfolio";
 import ProjectDetail from "./pages/ProjectDetail";
+import Certifications from "./pages/Certifications";
 import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import About from "./pages/About";
@@ -51,6 +52,14 @@ function AnimatedRoutes() {
           element={
             <PageTransition>
               <ProjectDetail />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/certifications"
+          element={
+            <PageTransition>
+              <Certifications />
             </PageTransition>
           }
         />
