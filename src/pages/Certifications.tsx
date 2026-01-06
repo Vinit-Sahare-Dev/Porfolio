@@ -24,33 +24,13 @@ const cardVariants = {
 export default function Certifications() {
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative py-20 sm:py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent" />
-        <div className="absolute top-20 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary/10 mb-6"
-            >
-              <Award className="w-8 h-8 text-primary" />
-            </motion.div>
-            
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-foreground mb-4">
-              CERTIFICATIONS
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Professional certifications and credentials that validate my expertise in modern technologies
+      {/* Hero Section - Minimal */}
+      <section className="relative py-12 md:py-16 px-6 lg:px-8 border-b border-border">
+        <div className="max-w-7xl mx-auto text-center space-y-3">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-2">Certifications</h1>
+            <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
+              Professional certifications and credentials validating expertise in modern technologies
             </p>
           </motion.div>
         </div>
