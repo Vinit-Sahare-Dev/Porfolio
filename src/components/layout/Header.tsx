@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 const navLinks = [
   { name: 'Home', path: '/' },
   { name: 'Projects', path: '/portfolio' },
+  { name: 'Certifications', path: '/certifications' },
   { name: 'Blog', path: '/blog' },
   { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' },
