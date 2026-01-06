@@ -232,6 +232,39 @@ export const projects: Project[] = [
         aspectRatio: 'landscape'
       }
     ]
+  },
+  {
+    id: '8',
+    title: 'WishLink E-Commerce',
+    category: 'fullstack',
+    year: '2025',
+    slug: 'wishlink-ecommerce',
+    coverImage: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+    description: 'A modern e-commerce platform built with React and a robust backend. Features product browsing, shopping cart functionality, user authentication, and seamless checkout experience with wishlist management.',
+    techStack: ['React', 'JavaScript', 'CSS3', 'E-Commerce', 'REST APIs', 'Authentication'],
+    features: [
+      'Product catalog browsing',
+      'Wishlist management',
+      'Shopping cart functionality',
+      'User authentication',
+      'Responsive design',
+      'Seamless checkout experience'
+    ],
+    github: 'https://github.com/Vinit-Sahare-Dev/WishLinkEcom',
+    images: [
+      {
+        id: '8-1',
+        src: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'WishLink E-Commerce storefront',
+        aspectRatio: 'landscape'
+      },
+      {
+        id: '8-2',
+        src: 'https://images.unsplash.com/photo-1472851294608-062f824d29cc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080',
+        alt: 'Shopping cart interface',
+        aspectRatio: 'landscape'
+      }
+    ]
   }
 ];
 
