@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, Calendar, BadgeCheck } from 'lucide-react';
+import { Award, ExternalLink, Calendar, BadgeCheck, Linkedin } from 'lucide-react';
 import { certifications } from '@/data/certifications';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+
+const LINKEDIN_CERTIFICATIONS_URL = 'https://www.linkedin.com/in/vinit-sahare/details/certifications/';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -119,17 +122,15 @@ export default function Certifications() {
                     </div>
 
                     {/* View Credential Link */}
-                    {cert.credentialUrl && (
-                      <a
-                        href={cert.credentialUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group/link"
-                      >
-                        <span>View Credential</span>
-                        <ExternalLink className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
-                      </a>
-                    )}
+                    <a
+                      href={LINKEDIN_CERTIFICATIONS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors group/link"
+                    >
+                      <span>View Credential</span>
+                      <ExternalLink className="w-4 h-4 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
+                    </a>
                   </div>
 
                   {/* Hover Glow Effect */}
@@ -139,6 +140,22 @@ export default function Certifications() {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+
+          {/* View All Credentials Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="flex justify-center mt-12"
+          >
+            <a href={LINKEDIN_CERTIFICATIONS_URL} target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="gap-2">
+                <Linkedin className="size-4" />
+                View Credentials
+                <ExternalLink className="size-3.5" />
+              </Button>
+            </a>
           </motion.div>
         </div>
       </section>

@@ -253,17 +253,17 @@ export function GitHubActivity() {
 
       <div className="relative p-5 sm:p-8">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
+          <div className="flex items-center gap-3 sm:gap-4">
             <motion.div 
-              className="p-3 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 rounded-xl border border-emerald-500/20"
+              className="p-2.5 sm:p-3 bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 rounded-xl border border-emerald-500/20"
               whileHover={{ scale: 1.05, rotate: 5 }}
             >
-              <Github className="size-6 text-emerald-400" />
+              <Github className="size-5 sm:size-6 text-emerald-400" />
             </motion.div>
             <div>
-              <h3 className="font-bold text-xl text-white">GitHub Activity</h3>
-              <p className="text-sm text-gray-400">
+              <h3 className="font-bold text-lg sm:text-xl text-white">GitHub Activity</h3>
+              <p className="text-xs sm:text-sm text-gray-400">
                 <span className="text-emerald-400 font-semibold">{stats?.totalContributions}</span> contributions in the last year
               </p>
             </div>
@@ -272,7 +272,7 @@ export function GitHubActivity() {
             href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-lg shadow-emerald-500/25"
+            className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 sm:px-5 py-2.5 rounded-xl font-semibold hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-lg shadow-emerald-500/25 w-full sm:w-auto text-sm sm:text-base"
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -283,57 +283,57 @@ export function GitHubActivity() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8">
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-4 mb-6 sm:mb-8">
           <motion.div 
-            className="bg-[#21262d]/80 backdrop-blur-sm rounded-xl p-4 border border-[#30363d] hover:border-emerald-500/30 transition-colors"
+            className="bg-[#21262d]/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#30363d] hover:border-emerald-500/30 transition-colors"
             whileHover={{ y: -2 }}
           >
-            <div className="flex items-center gap-2 text-emerald-400 mb-2">
-              <Activity className="size-4" />
-              <span className="text-xs font-medium uppercase tracking-wide">Total</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-emerald-400 mb-1 sm:mb-2">
+              <Activity className="size-3 sm:size-4" />
+              <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wide">Total</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.totalContributions}</p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{stats?.totalContributions}</p>
           </motion.div>
           
           <motion.div 
-            className="bg-[#21262d]/80 backdrop-blur-sm rounded-xl p-4 border border-[#30363d] hover:border-emerald-500/30 transition-colors"
+            className="bg-[#21262d]/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#30363d] hover:border-emerald-500/30 transition-colors"
             whileHover={{ y: -2 }}
           >
-            <div className="flex items-center gap-2 text-emerald-400 mb-2">
-              <Calendar className="size-4" />
-              <span className="text-xs font-medium uppercase tracking-wide">Active</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-emerald-400 mb-1 sm:mb-2">
+              <Calendar className="size-3 sm:size-4" />
+              <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wide">Active</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.activeDays} <span className="text-sm text-gray-500">days</span></p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{stats?.activeDays} <span className="text-xs sm:text-sm text-gray-500">days</span></p>
           </motion.div>
           
           <motion.div 
-            className="bg-[#21262d]/80 backdrop-blur-sm rounded-xl p-4 border border-[#30363d] hover:border-orange-500/30 transition-colors"
+            className="bg-[#21262d]/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#30363d] hover:border-orange-500/30 transition-colors"
             whileHover={{ y: -2 }}
           >
-            <div className="flex items-center gap-2 text-orange-400 mb-2">
-              <Flame className="size-4" />
-              <span className="text-xs font-medium uppercase tracking-wide">Streak</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-orange-400 mb-1 sm:mb-2">
+              <Flame className="size-3 sm:size-4" />
+              <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wide">Streak</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">
+            <p className="text-xl sm:text-3xl font-bold text-white">
               {stats?.currentStreak}
               <span className="text-orange-400 ml-1">🔥</span>
             </p>
           </motion.div>
           
           <motion.div 
-            className="bg-[#21262d]/80 backdrop-blur-sm rounded-xl p-4 border border-[#30363d] hover:border-purple-500/30 transition-colors"
+            className="bg-[#21262d]/80 backdrop-blur-sm rounded-lg sm:rounded-xl p-3 sm:p-4 border border-[#30363d] hover:border-purple-500/30 transition-colors"
             whileHover={{ y: -2 }}
           >
-            <div className="flex items-center gap-2 text-purple-400 mb-2">
-              <TrendingUp className="size-4" />
-              <span className="text-xs font-medium uppercase tracking-wide">Best</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-purple-400 mb-1 sm:mb-2">
+              <TrendingUp className="size-3 sm:size-4" />
+              <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wide">Best</span>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold text-white">{stats?.longestStreak} <span className="text-sm text-gray-500">days</span></p>
+            <p className="text-xl sm:text-3xl font-bold text-white">{stats?.longestStreak} <span className="text-xs sm:text-sm text-gray-500">days</span></p>
           </motion.div>
         </div>
 
-        {/* Contribution Grid */}
-        <div className="overflow-x-auto pb-2 -mx-2 px-2 hide-scrollbar">
+        {/* Contribution Grid - Hidden on mobile, shown on tablet+ */}
+        <div className="hidden sm:block overflow-x-auto pb-2 -mx-2 px-2 hide-scrollbar">
           <div style={{ minWidth: `${Math.max(weeks.length * 13 + (yearGapIndex > 0 ? 50 : 30), 650)}px` }}>
             {/* Month labels */}
             <div className="flex text-xs text-gray-500 mb-1 ml-7 h-4 relative">
@@ -408,6 +408,14 @@ export function GitHubActivity() {
               ))}
               <span>More</span>
             </div>
+          </div>
+        </div>
+
+        {/* Mobile-friendly summary - Shown only on mobile */}
+        <div className="sm:hidden mt-2">
+          <div className="flex items-center justify-between text-sm text-gray-400 bg-[#21262d]/50 rounded-lg p-3">
+            <span>View full contribution graph on GitHub</span>
+            <ExternalLink className="size-4 text-emerald-400" />
           </div>
         </div>
       </div>

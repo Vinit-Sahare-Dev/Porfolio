@@ -1,13 +1,9 @@
-import { useState } from 'react';
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, Code2, ExternalLink, Github, ArrowLeft } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { getProjectBySlug } from '@/data/projects';
-import { ImageWithLightbox } from '@/components/portfolio/ImageWithLightbox';
-import { Lightbox } from '@/components/portfolio/Lightbox';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
@@ -19,22 +15,10 @@ export default function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
 
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
   // 404 if project not found
   if (!project) {
     return <Navigate to="/404" replace />;
   }
-
-  const openLightbox = (index: number) => {
-    setCurrentImageIndex(index);
-    setLightboxOpen(true);
-  };
-
-  const closeLightbox = () => {
-    setLightboxOpen(false);
-  };
 
   return (
     <>
@@ -141,15 +125,15 @@ export default function ProjectDetail() {
             <div className="flex flex-wrap gap-4 pt-4">
               {project.github && (
                 <a href={project.github} target="_blank" rel="noopener noreferrer">
-                  <Button variant="outline" className="gap-2">
+                  <Button className="gap-2 bg-primary hover:bg-primary/90">
                     <Github className="size-4" />
-                    View Code
+                    View on GitHub
                   </Button>
                 </a>
               )}
               {project.liveDemo && (
                 <a href={project.liveDemo} target="_blank" rel="noopener noreferrer">
-                  <Button className="gap-2">
+                  <Button variant="outline" className="gap-2">
                     <ExternalLink className="size-4" />
                     Live Demo
                   </Button>
@@ -158,37 +142,6 @@ export default function ProjectDetail() {
             </div>
           </motion.div>
         </section>
-
-        {/* Image Gallery */}
-        <section className="py-12 md:py-16">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <h2 className="text-2xl font-semibold mb-8">Project Screenshots</h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {project.images.map((image, index) => (
-                <ScrollReveal key={image.id} delay={index * 0.1}>
-                  <div className="rounded-lg overflow-hidden border border-border">
-                    <ImageWithLightbox
-                      image={image}
-                      onClick={() => openLightbox(index)}
-                      priority={index === 0}
-                      index={0}
-                      className="w-full aspect-video object-cover"
-                    />
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Lightbox */}
-        <Lightbox
-          images={project.images}
-          currentIndex={currentImageIndex}
-          isOpen={lightboxOpen}
-          onClose={closeLightbox}
-          onNavigate={setCurrentImageIndex}
-        />
       </div>
     </>
   );
