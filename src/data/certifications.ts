@@ -58,6 +58,55 @@ export const certifications: Certification[] = [
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
     skills: ['Software Engineering', 'System Design', 'Data Structures', 'Algorithms'],
     featured: true
+  },
+  {
+    id: '7',
+    title: 'Java Full Stack Development',
+    issuer: 'Sathya Technologies',
+    issueDate: 'January 2026',
+    credentialId: 'ST1112',
+    image: 'https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    skills: ['Java', 'Full Stack', 'Spring Boot', 'Web Development'],
+    featured: true
+  },
+  {
+    id: '8',
+    title: 'SDE Intern (Full Stack) - Internship Completion',
+    issuer: 'Veridia.io',
+    issueDate: 'December 2025',
+    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    skills: ['Full Stack Development', 'Software Engineering', 'MSME & AICTE Certified'],
+    featured: true
+  },
+  {
+    id: '9',
+    title: 'Python 3.4.3 Training',
+    issuer: 'Spoken Tutorial Project, IIT Bombay',
+    issueDate: 'December 2024',
+    credentialId: '3949619KWM',
+    image: 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    skills: ['Python', 'Programming', 'IIT Bombay Certified'],
+    featured: false
+  },
+  {
+    id: '10',
+    title: 'Git Training',
+    issuer: 'Spoken Tutorial Project, IIT Bombay',
+    issueDate: 'March 2025',
+    credentialId: '3949619QM2',
+    image: 'https://images.unsplash.com/photo-1556075798-4825dfaaf498?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    skills: ['Git', 'Version Control', 'IIT Bombay Certified'],
+    featured: false
+  },
+  {
+    id: '11',
+    title: 'Ruby Training',
+    issuer: 'Spoken Tutorial Project, IIT Bombay',
+    issueDate: 'April 2025',
+    credentialId: '3949619511',
+    image: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=800',
+    skills: ['Ruby', 'Programming', 'IIT Bombay Certified'],
+    featured: false
   }
 ];
 

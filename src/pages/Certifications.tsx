@@ -168,12 +168,11 @@ export default function Certifications() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8"
+            className="grid grid-cols-3 gap-8"
           >
             {[
-              { value: certifications.length, label: 'Certifications' },
-              { value: '100+', label: 'Hours of Learning' },
-              { value: new Set(certifications.map(c => c.issuer)).size, label: 'Issuers' },
+              { value: '15+', label: 'Certifications' },
+              { value: '300+', label: 'Hours of Learning' },
               { value: certifications.filter(c => c.featured).length, label: 'Featured' }
             ].map((stat, index) => (
               <motion.div

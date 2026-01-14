@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Github, ExternalLink, Calendar, Activity, Flame, TrendingUp } from 'lucide-react';
 
@@ -112,6 +112,7 @@ const levelColors: Record<number, string> = {
 export function GitHubActivity() {
   const [stats, setStats] = useState<GitHubStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetchGitHubContributions().then((data) => {
@@ -120,7 +121,9 @@ export function GitHubActivity() {
     });
   }, []);
 
-  // Build the contribution grid exactly like GitHub does
+  // No scroll needed - RTL direction shows end by default
+
+  // Build the contribution grid - show full year with no duplicate months
   const buildGrid = () => {
     if (!stats || stats.contributionDays.length === 0) {
       return { weeks: [], monthLabels: [] };
@@ -131,59 +134,76 @@ export function GitHubActivity() {
       new Date(a.date).getTime() - new Date(b.date).getTime()
     );
 
+    const lastDate = new Date(sorted[sorted.length - 1].date);
+    const lastMonth = lastDate.getMonth();
+    const lastYear = lastDate.getFullYear();
+
+    // Filter: remove duplicate months from earlier years (if Jan 2026 exists, remove Jan 2025)
+    const filteredDays = sorted.filter(day => {
+      const date = new Date(day.date);
+      const month = date.getMonth();
+      const year = date.getFullYear();
+      
+      // If this month exists in the latest year, skip it from earlier years
+      if (month <= lastMonth && year < lastYear) {
+        return false;
+      }
+      return true;
+    });
+
+    if (filteredDays.length === 0) {
+      return { weeks: [], monthLabels: [] };
+    }
+
     // Create a map for quick lookup
     const contributionMap = new Map<string, ContributionDay>();
-    sorted.forEach(day => {
+    filteredDays.forEach(day => {
       contributionMap.set(day.date, day);
     });
 
-    // Get the date range - from first day in data to last day
-    const firstDate = new Date(sorted[0].date);
-    const lastDate = new Date(sorted[sorted.length - 1].date);
-    
-    // Adjust to start from the Sunday of the week containing the first date
+    // Get valid months from filtered data (to avoid showing duplicate month labels)
+    const validMonths = new Set<string>();
+    filteredDays.forEach(day => {
+      const date = new Date(day.date);
+      validMonths.add(`${date.getFullYear()}-${date.getMonth()}`);
+    });
+
+    // Start from the first day in filtered data
+    const firstDate = new Date(filteredDays[0].date);
     const startDate = new Date(firstDate);
     startDate.setDate(startDate.getDate() - startDate.getDay());
     
-    // Build weeks array (each week is an array of 7 days, Sun-Sat)
+    const filteredLastDate = new Date(filteredDays[filteredDays.length - 1].date);
+    
+    // Build weeks array
     const weeks: ContributionDay[][] = [];
-    const monthLabels: { month: string; weekIndex: number; year: number }[] = [];
+    const monthLabels: { month: string; weekIndex: number }[] = [];
     let currentDate = new Date(startDate);
     let currentWeek: ContributionDay[] = [];
-    let lastMonthSeen = -1;
-    let lastYearSeen = -1;
+    let lastMonthSeen = '';
 
-    while (currentDate <= lastDate) {
+    while (currentDate <= filteredLastDate) {
       const dateStr = currentDate.toISOString().split('T')[0];
       const dayOfWeek = currentDate.getDay();
       const month = currentDate.getMonth();
       const year = currentDate.getFullYear();
+      const monthKey = `${year}-${month}`;
       
-      // Track month labels at the start of each month
-      if (month !== lastMonthSeen && dayOfWeek === 0) {
-        monthLabels.push({
-          month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
-          weekIndex: weeks.length,
-          year
-        });
-        lastMonthSeen = month;
-        lastYearSeen = year;
-      } else if (month !== lastMonthSeen && currentWeek.length === 0) {
-        // Also add month label if it's the first day we're processing for a new month
-        monthLabels.push({
-          month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
-          weekIndex: weeks.length,
-          year
-        });
-        lastMonthSeen = month;
-        lastYearSeen = year;
+      // Only add month label if this month is in our valid filtered months
+      if (monthKey !== lastMonthSeen && validMonths.has(monthKey)) {
+        if (dayOfWeek === 0 || currentWeek.length === 0) {
+          monthLabels.push({
+            month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
+            weekIndex: weeks.length
+          });
+          lastMonthSeen = monthKey;
+        }
       }
       
-      // Get contribution for this day or empty
+      // Get contribution for this day - show level 0 for days without contributions
       const contribution = contributionMap.get(dateStr);
       currentWeek.push(contribution || { date: dateStr, count: 0, level: 0 });
       
-      // End of week (Saturday)
       if (dayOfWeek === 6) {
         weeks.push(currentWeek);
         currentWeek = [];
@@ -192,28 +212,17 @@ export function GitHubActivity() {
       currentDate.setDate(currentDate.getDate() + 1);
     }
     
-    // Push remaining days
     if (currentWeek.length > 0) {
-      // Pad to 7 days
       while (currentWeek.length < 7) {
         currentWeek.push({ date: '', count: 0, level: 0 });
       }
       weeks.push(currentWeek);
     }
 
-    // Find the week index where year changes (from 2024 to 2025)
-    let yearGapIndex = -1;
-    for (let i = 1; i < monthLabels.length; i++) {
-      if (monthLabels[i].year > monthLabels[i - 1].year) {
-        yearGapIndex = monthLabels[i].weekIndex;
-        break;
-      }
-    }
-
-    return { weeks, monthLabels, yearGapIndex };
+    return { weeks, monthLabels };
   };
 
-  const { weeks, monthLabels, yearGapIndex } = buildGrid();
+  const { weeks, monthLabels } = buildGrid();
 
   if (loading) {
     return (
@@ -332,26 +341,22 @@ export function GitHubActivity() {
           </motion.div>
         </div>
 
-        {/* Contribution Grid - Hidden on mobile, shown on tablet+ */}
-        <div className="hidden sm:block overflow-x-auto pb-2 -mx-2 px-2 hide-scrollbar">
-          <div style={{ minWidth: `${Math.max(weeks.length * 13 + (yearGapIndex > 0 ? 50 : 30), 650)}px` }}>
-            {/* Month labels */}
-            <div className="flex text-xs text-gray-500 mb-1 ml-7 h-4 relative">
-              {monthLabels.map((label, i) => {
-                // Calculate extra offset for months after year gap
-                const extraOffset = yearGapIndex > 0 && label.weekIndex >= yearGapIndex ? 16 : 0;
-                return (
-                  <span
-                    key={`${label.month}-${i}-${label.weekIndex}`}
-                    className="absolute text-[10px] sm:text-[11px]"
-                    style={{ 
-                      left: `calc(${(label.weekIndex + 1) * 13 + extraOffset}px)`,
-                    }}
-                  >
-                    {label.month}
-                  </span>
-                );
-              })}
+        {/* Contribution Grid - Scrollable on all devices, RTL scroll so it starts at the end */}
+        <div ref={scrollContainerRef} className="overflow-x-auto pb-2 -mx-2 px-2" style={{ direction: 'rtl' }}>
+          <div className="inline-block min-w-max" style={{ direction: 'ltr' }}>
+            {/* Month labels - positioned relative to grid */}
+            <div className="flex text-xs text-gray-500 mb-1 h-4 ml-7 relative" style={{ width: `${weeks.length * 12 + weeks.length * 2}px` }}>
+              {monthLabels.map((label, i) => (
+                <span
+                  key={`${label.month}-${i}-${label.weekIndex}`}
+                  className="absolute text-[10px] sm:text-[11px]"
+                  style={{ 
+                    left: `${label.weekIndex * 12}px`,
+                  }}
+                >
+                  {label.month}
+                </span>
+              ))}
             </div>
             
             {/* Grid with day labels */}
@@ -372,7 +377,7 @@ export function GitHubActivity() {
                 {weeks.map((week, weekIndex) => (
                   <div 
                     key={weekIndex} 
-                    className={`flex flex-col gap-[2px] sm:gap-[3px] ${yearGapIndex > 0 && weekIndex === yearGapIndex ? 'ml-3 sm:ml-4' : ''}`}
+                    className="flex flex-col gap-[2px] sm:gap-[3px]"
                   >
                     {week.map((day, dayIndex) => (
                       <motion.div
@@ -408,14 +413,6 @@ export function GitHubActivity() {
               ))}
               <span>More</span>
             </div>
-          </div>
-        </div>
-
-        {/* Mobile-friendly summary - Shown only on mobile */}
-        <div className="sm:hidden mt-2">
-          <div className="flex items-center justify-between text-sm text-gray-400 bg-[#21262d]/50 rounded-lg p-3">
-            <span>View full contribution graph on GitHub</span>
-            <ExternalLink className="size-4 text-emerald-400" />
           </div>
         </div>
       </div>
