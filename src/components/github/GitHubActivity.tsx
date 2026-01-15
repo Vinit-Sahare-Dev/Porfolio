@@ -139,10 +139,21 @@ export function GitHubActivity() {
     const lastYear = lastDate.getFullYear();
 
     // Filter: remove duplicate months from earlier years (if Jan 2026 exists, remove Jan 2025)
+    // Start from Feb 2025 to show full year with inactive days
     const filteredDays = sorted.filter(day => {
       const date = new Date(day.date);
       const month = date.getMonth();
       const year = date.getFullYear();
+      
+      // Include Feb 2025 onwards (month 1 = February)
+      if (year === 2025 && month >= 1) {
+        return true;
+      }
+      
+      // For 2026+, include everything
+      if (year >= lastYear) {
+        return true;
+      }
       
       // If this month exists in the latest year, skip it from earlier years
       if (month <= lastMonth && year < lastYear) {
@@ -161,43 +172,37 @@ export function GitHubActivity() {
       contributionMap.set(day.date, day);
     });
 
-    // Get valid months from filtered data (to avoid showing duplicate month labels)
-    const validMonths = new Set<string>();
-    filteredDays.forEach(day => {
-      const date = new Date(day.date);
-      validMonths.add(`${date.getFullYear()}-${date.getMonth()}`);
-    });
-
-    // Start from the first day in filtered data
-    const firstDate = new Date(filteredDays[0].date);
-    const startDate = new Date(firstDate);
-    startDate.setDate(startDate.getDate() - startDate.getDay());
+    // Start from February 1, 2025 to show full year with inactive days
+    const userStartDate = new Date('2025-02-01');
     
+    const startDate = new Date(userStartDate);
+    startDate.setDate(startDate.getDate() - startDate.getDay()); // Align to Sunday
+    
+    // End at today or last contribution date, whichever is later
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const filteredLastDate = new Date(filteredDays[filteredDays.length - 1].date);
+    const endDate = filteredLastDate > today ? filteredLastDate : today;
     
     // Build weeks array
     const weeks: ContributionDay[][] = [];
     const monthLabels: { month: string; weekIndex: number }[] = [];
     let currentDate = new Date(startDate);
     let currentWeek: ContributionDay[] = [];
-    let lastMonthSeen = '';
+    let lastMonthSeen = -1;
 
-    while (currentDate <= filteredLastDate) {
+    while (currentDate <= endDate) {
       const dateStr = currentDate.toISOString().split('T')[0];
       const dayOfWeek = currentDate.getDay();
       const month = currentDate.getMonth();
-      const year = currentDate.getFullYear();
-      const monthKey = `${year}-${month}`;
       
-      // Only add month label if this month is in our valid filtered months
-      if (monthKey !== lastMonthSeen && validMonths.has(monthKey)) {
-        if (dayOfWeek === 0 || currentWeek.length === 0) {
-          monthLabels.push({
-            month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
-            weekIndex: weeks.length
-          });
-          lastMonthSeen = monthKey;
-        }
+      // Add month label when month changes and it's the start of a week
+      if (month !== lastMonthSeen && dayOfWeek === 0) {
+        monthLabels.push({
+          month: currentDate.toLocaleDateString('en-US', { month: 'short' }),
+          weekIndex: weeks.length
+        });
+        lastMonthSeen = month;
       }
       
       // Get contribution for this day - show level 0 for days without contributions
@@ -345,13 +350,13 @@ export function GitHubActivity() {
         <div ref={scrollContainerRef} className="overflow-x-auto pb-2 -mx-2 px-2" style={{ direction: 'rtl' }}>
           <div className="inline-block min-w-max" style={{ direction: 'ltr' }}>
             {/* Month labels - positioned relative to grid */}
-            <div className="flex text-xs text-gray-500 mb-1 h-4 ml-7 relative" style={{ width: `${weeks.length * 12 + weeks.length * 2}px` }}>
+            <div className="flex text-xs text-gray-500 mb-1 h-4 ml-7 relative" style={{ width: `${weeks.length * 14}px` }}>
               {monthLabels.map((label, i) => (
                 <span
                   key={`${label.month}-${i}-${label.weekIndex}`}
                   className="absolute text-[10px] sm:text-[11px]"
                   style={{ 
-                    left: `${label.weekIndex * 12}px`,
+                    left: `${label.weekIndex * 14}px`,
                   }}
                 >
                   {label.month}
