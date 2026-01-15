@@ -1,48 +1,54 @@
-# 🌟 Porfolio
+# Vinit Sahare - Portfolio
 
-Welcome to my **personal Portfolio website**! This repository contains the source code of my professional portfolio that showcases my skills, projects, experiences, and contact information.  
+A modern, responsive developer portfolio built with React, TypeScript, and Tailwind CSS.
 
-🔗 **Live Demo:** *(Add link to your deployed portfolio, e.g., https://vinit-portfolio.vercel.app)*
+🔗 **Live:** [vinitsahare.vercel.app](https://vinitsahare.vercel.app)
 
----
+## Tech Stack
 
-## 👋 About Me
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- Framer Motion
+- shadcn/ui
 
-Hi! I’m **Vinit Sahare** — a passionate developer building modern, responsive web experiences.  
-I created this portfolio to showcase my projects, skills and journey in software development. :contentReference[oaicite:1]{index=1}
+## Features
 
-**Location:** Hyderabad, India  
-**Skills:** *(List the main skills like HTML, CSS, JavaScript, React, etc.)*
+- Responsive design
+- Dark/Light theme
+- GitHub activity graph
+- Project showcase
+- Certifications section
+- Contact form
 
----
+## Getting Started
 
-## 🛠️ Features
+```bash
+# Install dependencies
+npm install
 
-✅ Responsive design (works on mobile & desktop)  
-✅ Section for projects with live demos & GitHub links  
-✅ Skills section with progress/levels  
-✅ Contact form (linked to an email or service)  
-✅ Clean, modern UI  
+# Run development server
+npm run dev
 
-(*You can update features based on what your actual portfolio contains*) :contentReference[oaicite:2]{index=2}
+# Build for production
+npm run build
 
----
+# Preview production build
+npm run preview
+```
 
-## 📦 Technologies Used
+## Deployment
 
-This project was built with:
+This project is configured for deployment on Vercel, Netlify, or any static hosting.
 
-- **Frontend:** HTML / CSS / JavaScript / React *(adjust if different)*  
-- **Deployment:** GitHub Pages / Vercel / Netlify *(if deployed)*  
-- **Other Tools:** *(e.g., Styled Components, Tailwind, Bootstrap, etc.)* :contentReference[oaicite:3]{index=3}
+```bash
+npm run build
+```
 
----
+The `dist` folder contains the production-ready files.
 
-## 🚀 Demo
+## Author
 
-Here are some visuals of the live portfolio (replace with your screenshots):
-
-
-
-
-
+**Vinit Sahare**
+- GitHub: [@Vinit-Sahare-Dev](https://github.com/Vinit-Sahare-Dev)
+- LinkedIn: [vinit-sahare](https://www.linkedin.com/in/vinit-sahare/)

@@ -58,7 +58,7 @@ export function Header() {
               className="flex items-center gap-2"
             >
               <span className="text-primary font-mono">&lt;/&gt;</span>
-              {developerInfo.name.split(' ')[0]}
+              {developerInfo.name}
             </motion.span>
           </PrefetchLink>
 
