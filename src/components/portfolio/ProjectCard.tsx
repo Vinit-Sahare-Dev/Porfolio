@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import type { Project } from '@/types';
 import { cn } from '@/lib/utils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { generateBlurDataURL } from '@/utils/imageOptimization';
 
 interface ProjectCardProps {
   project: Project;
@@ -42,20 +44,13 @@ export function ProjectCard({
       >
         {/* Image Container */}
         <div className={cn('relative overflow-hidden bg-muted', aspectRatioClasses[ratio])}>
-          {/* Loading placeholder */}
-          {!isLoaded && (
-            <div className="absolute inset-0 bg-muted" />
-          )}
-          
-          <motion.img
+          <OptimizedImage
             src={project.coverImage}
             alt={project.title}
-            className={cn(
-              'absolute inset-0 w-full h-full object-cover transition-all duration-700',
-              isLoaded ? 'opacity-100' : 'opacity-0',
-              'group-hover:scale-110'
-            )}
-            loading={index < 6 ? 'eager' : 'lazy'}
+            className="absolute inset-0 w-full h-full group-hover:scale-110 transition-transform duration-700"
+            objectFit="cover"
+            blurDataURL={generateBlurDataURL('#6366f1')}
+            priority={index < 4}
             onLoad={() => setIsLoaded(true)}
           />
           
