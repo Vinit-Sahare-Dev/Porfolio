@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AnalyticsProvider } from "@/components/providers/AnalyticsProvider";
 import { Layout } from "@/components/layout/Layout";
 import { SkipToContent } from "@/components/ui/SkipToContent";
 import { PageTransition } from "@/components/ui/PageTransition";
@@ -116,10 +117,12 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <SkipToContent />
-            <Layout>
-              <AnimatedRoutes />
-            </Layout>
+            <AnalyticsProvider>
+              <SkipToContent />
+              <Layout>
+                <AnimatedRoutes />
+              </Layout>
+            </AnalyticsProvider>
           </BrowserRouter>
         </TooltipProvider>
       </ThemeProvider>

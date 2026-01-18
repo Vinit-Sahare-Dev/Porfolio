@@ -5,6 +5,7 @@ import type { Project } from '@/types';
 import { cn } from '@/lib/utils';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { generateBlurDataURL } from '@/utils/imageOptimization';
+import { analytics } from '@/lib/analytics';
 
 interface ProjectCardProps {
   project: Project;
@@ -40,6 +41,7 @@ export function ProjectCard({
     >
       <Link
         to={`/project/${project.slug}`}
+        onClick={() => analytics.project.view(project.title)}
         className="group block relative overflow-hidden rounded-sm"
       >
         {/* Image Container */}
