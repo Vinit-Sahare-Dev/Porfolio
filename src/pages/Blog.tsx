@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Search, Filter, Rss } from 'lucide-react';
+import { Search, Filter } from 'lucide-react';
 import { articles, getAllCategories } from '@/data/articles';
 import { ArticleCard } from '@/components/blog/ArticleCard';
 import { Input } from '@/components/ui/input';
@@ -37,20 +37,9 @@ export default function Blog() {
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
             Blog & Articles
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Technical writing on web development, software architecture, and best practices.
           </p>
-          <Button
-            variant="outline"
-            size="sm"
-            asChild
-            className="gap-2"
-          >
-            <a href="/rss.xml" target="_blank" rel="noopener noreferrer">
-              <Rss className="size-4" />
-              Subscribe via RSS
-            </a>
-          </Button>
         </motion.div>
 
         {/* Search and Filter */}

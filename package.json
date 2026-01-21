@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate:rss && vite build",
+    "build": "npm run generate:seo && vite build",
     "build:dev": "vite build --mode development",
+    "generate:seo": "npm run generate:rss && npm run generate:sitemap",
     "generate:rss": "node scripts/generate-rss.js",
+    "generate:sitemap": "node scripts/generate-sitemap.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

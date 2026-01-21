@@ -1,9 +1,11 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, Clock, Tag } from 'lucide-react';
 import { getArticleBySlug } from '@/data/articles';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { SEOHead } from '@/components/seo/SEOHead';
+import { generateBlogPostingSchema } from '@/lib/structuredData';
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
@@ -24,8 +26,24 @@ export default function BlogPost() {
     );
   }
 
+  const structuredData = generateBlogPostingSchema(article);
+
   return (
-    <main id="main-content" className="min-h-screen pt-24 pb-16">
+    <>
+      <SEOHead
+        title={article.title}
+        description={article.excerpt}
+        type="article"
+        article={{
+          publishedTime: article.publishedAt,
+          modifiedTime: article.publishedAt,
+          author: 'Vinit Sahare',
+          tags: article.tags
+        }}
+        structuredData={structuredData}
+      />
+      
+      <main id="main-content" className="min-h-screen pt-24 pb-16">
       <article className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.div
@@ -154,5 +172,6 @@ export default function BlogPost() {
         </motion.div>
       </article>
     </main>
+    </>
   );
 }
