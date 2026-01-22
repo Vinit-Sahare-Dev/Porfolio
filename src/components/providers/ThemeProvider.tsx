@@ -1,5 +1,5 @@
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
 interface ThemeProviderProps {
   children: ReactNode;
@@ -11,37 +11,15 @@ interface ThemeProviderProps {
 
 /**
  * Theme Provider component wrapping next-themes
- * Provides dark mode support with smooth transitions
+ * Provides dark mode support with immediate theme switching
  */
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  // Add smooth transition class when theme changes
-  useEffect(() => {
-    const handleThemeChange = () => {
-      document.documentElement.classList.add('transitioning');
-      setTimeout(() => {
-        document.documentElement.classList.remove('transitioning');
-      }, 500);
-    };
-
-    // Listen for theme changes
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          handleThemeChange();
-        }
-      });
-    });
-
-    observer.observe(document.documentElement, { attributes: true });
-
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <NextThemesProvider
       attribute="class"
       defaultTheme="dark"
       enableSystem={false}
+      storageKey="portfolio-theme"
       disableTransitionOnChange={false}
       {...props}
     >

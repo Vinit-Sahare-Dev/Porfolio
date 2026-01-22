@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from 'framer-motion';
  * Animated sun/moon icons with smooth transitions
  */
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   // Prevent hydration mismatch
@@ -27,11 +27,18 @@ export function ThemeToggle() {
     );
   }
 
-  const isDark = theme === 'dark';
+  const isDark = resolvedTheme === 'dark';
+
+  const toggleTheme = () => {
+    const newTheme = isDark ? 'light' : 'dark';
+    setTheme(newTheme);
+    // Force immediate update
+    document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
 
   return (
     <motion.button
-      onClick={() => setTheme(isDark ? 'light' : 'dark')}
+      onClick={toggleTheme}
       className="relative size-10 rounded-xl bg-accent/50 hover:bg-accent flex items-center justify-center overflow-hidden transition-colors duration-300"
       aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
       whileHover={{ scale: 1.05 }}
