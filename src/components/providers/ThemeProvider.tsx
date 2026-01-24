@@ -11,14 +11,15 @@ interface ThemeProviderProps {
 
 /**
  * Theme Provider component wrapping next-themes
- * Provides dark mode support with immediate theme switching
+ * Provides dark mode support with system preference detection
+ * Automatically detects and applies user's OS theme preference
  */
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="dark"
-      enableSystem={false}
+      defaultTheme="system"
+      enableSystem={true}
       storageKey="portfolio-theme"
       disableTransitionOnChange={false}
       {...props}
