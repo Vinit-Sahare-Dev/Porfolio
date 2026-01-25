@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, Calendar, BadgeCheck, Linkedin } from 'lucide-react';
+import { Award, ExternalLink, Calendar, BadgeCheck, Linkedin, Filter } from 'lucide-react';
 import { certifications } from '@/data/certifications';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useState, useMemo } from 'react';
 
 const LINKEDIN_CERTIFICATIONS_URL = 'https://www.linkedin.com/in/vinit-sahare/details/certifications/';
 
@@ -25,6 +26,15 @@ const cardVariants = {
 };
 
 export default function Certifications() {
+  const [filter, setFilter] = useState<'all' | 'featured'>('all');
+  
+  const filteredCertifications = useMemo(() => {
+    if (filter === 'featured') {
+      return certifications.filter(cert => cert.featured);
+    }
+    return certifications;
+  }, [filter]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section - Minimal */}
@@ -42,13 +52,36 @@ export default function Certifications() {
       {/* Certifications Grid */}
       <section className="py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Filter Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex justify-center gap-2 mb-8"
+          >
+            <Button
+              variant={filter === 'all' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setFilter('all')}
+            >
+              All Certifications ({certifications.length})
+            </Button>
+            <Button
+              variant={filter === 'featured' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setFilter('featured')}
+            >
+              <BadgeCheck className="size-3 mr-1" />
+              Featured ({certifications.filter(c => c.featured).length})
+            </Button>
+          </motion.div>
+
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
           >
-            {certifications.map((cert, index) => (
+            {filteredCertifications.map((cert, index) => (
               <motion.div
                 key={cert.id}
                 variants={cardVariants}
