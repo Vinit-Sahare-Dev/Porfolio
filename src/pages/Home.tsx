@@ -10,7 +10,6 @@ import { generateBlurDataURL } from '@/utils/imageOptimization';
 import { analytics } from '@/lib/analytics';
 import { generateProfilePageSchema } from '@/lib/structuredData';
 import { SkillsVisualization } from '@/components/skills/SkillsVisualization';
-import { TestimonialsSection } from '@/components/testimonials/TestimonialsSection';
 import { AvailabilityBadge } from '@/components/ui/AvailabilityBadge';
 import { ArrowRight, Briefcase, Calendar, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -370,9 +369,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-        {/* Testimonials Section - FIFTH */}
-        <TestimonialsSection />
 
         {/* CTA Section */}
         <section className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-primary/5 via-primary/10 to-background border-t border-border relative overflow-hidden">
