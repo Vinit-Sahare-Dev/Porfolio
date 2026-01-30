@@ -1,34 +1,36 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import { developerInfo } from '@/data/developer';
 import { getFeaturedProjects } from '@/data/projects';
 import { ProjectCard } from '@/components/portfolio/ProjectCard';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { SEOHead } from '@/components/seo/SEOHead';
-import { ArrowRight, Code2, Database, Server, Settings, Briefcase, Calendar, Download } from 'lucide-react';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { generateBlurDataURL } from '@/utils/imageOptimization';
+import { analytics } from '@/lib/analytics';
+import { generateProfilePageSchema } from '@/lib/structuredData';
+import { SkillsVisualization } from '@/components/skills/SkillsVisualization';
+import { TestimonialsSection } from '@/components/testimonials/TestimonialsSection';
+import { AvailabilityBadge } from '@/components/ui/AvailabilityBadge';
+import { ArrowRight, Briefcase, Calendar, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
 
 
-const skillIcons: Record<string, React.ReactNode> = {
-  'Frontend': <Code2 className="size-5" />,
-  'Backend': <Server className="size-5" />,
-  'Database': <Database className="size-5" />,
-  'DevOps & Tools': <Settings className="size-5" />
-};
 
-/**
- * Homepage with developer hero section and featured projects
- * Showcases developer's skills and best work
- */
+
+
 export default function Home() {
   const featuredProjects = getFeaturedProjects();
+  const structuredData = generateProfilePageSchema();
 
   return (
     <>
-      <SEOHead />
+      <SEOHead 
+        structuredData={structuredData}
+        type="profile"
+      />
       
       <div className="min-h-screen">
         {/* Hero Section - Full viewport with gradient */}
@@ -113,14 +115,21 @@ export default function Home() {
                   <div className="relative w-52 h-52 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
                     {/* Inner gradient background */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5" />
-                    <motion.img
-                      src={developerInfo.profileImage}
-                      alt={developerInfo.name}
-                      className="relative w-full h-full object-cover object-top drop-shadow-2xl"
+                    <motion.div
+                      className="relative w-full h-full"
                       initial={{ scale: 1 }}
                       animate={{ scale: [1, 1.02, 1] }}
                       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                    />
+                    >
+                      <OptimizedImage
+                        src={developerInfo.profileImage}
+                        alt={developerInfo.name}
+                        className="w-full h-full"
+                        objectFit="cover"
+                        blurDataURL={generateBlurDataURL('#10b981')}
+                        priority={true}
+                      />
+                    </motion.div>
                   </div>
                   {/* Decorative floating elements */}
                   <motion.div 
@@ -154,6 +163,15 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
               >
+                {/* Availability Badge */}
+                <motion.div
+                  className="flex justify-center lg:justify-start"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 1, delay: 0.3 }}
+                >
+                  <AvailabilityBadge available={true} message="Open to opportunities" />
+                </motion.div>
 
                 <motion.h1
                   className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-foreground"
@@ -194,6 +212,7 @@ export default function Home() {
                 <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
                     <Link
                       to="/portfolio"
+                      onClick={() => analytics.engagement.clickCTA('View My Work', 'Hero')}
                       className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 text-sm sm:text-base"
                     >
                       View My Work
@@ -203,6 +222,7 @@ export default function Home() {
                   <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
                     <Link
                       to="/contact"
+                      onClick={() => analytics.contact.clickContactButton('Hero')}
                       className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border-2 border-border px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold hover:border-primary/50 hover:bg-accent/50 transition-all duration-300 text-sm sm:text-base"
                     >
                       Get in Touch
@@ -299,46 +319,7 @@ export default function Home() {
               </div>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {developerInfo.skills.map((skill, index) => (
-                <ScrollReveal key={skill.name} delay={index * 0.1}>
-                  <motion.div 
-                    className="group relative bg-gradient-to-br from-background to-accent/20 border border-border rounded-xl p-5 sm:p-6 hover:border-primary/50 transition-all duration-300 h-full overflow-hidden"
-                    whileHover={{ y: -4, scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    {/* Background gradient on hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    
-                    <div className="relative z-10">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="p-2.5 sm:p-3 bg-primary/10 rounded-xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
-                          {skillIcons[skill.name]}
-                        </div>
-                        <h3 className="font-semibold text-base sm:text-lg">{skill.name}</h3>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {skill.items.map((item, itemIndex) => (
-                          <motion.div
-                            key={item}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: itemIndex * 0.05 }}
-                          >
-                            <Badge 
-                              variant="secondary" 
-                              className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 bg-background/80 border border-border/50 hover:bg-primary/10 hover:border-primary/30 transition-colors cursor-default"
-                            >
-                              {item}
-                            </Badge>
-                          </motion.div>
-                        ))}
-                      </div>
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
-              ))}
-            </div>
+            <SkillsVisualization />
           </div>
         </section>
 
@@ -390,6 +371,9 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Testimonials Section - FIFTH */}
+        <TestimonialsSection />
+
         {/* CTA Section */}
         <section className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-primary/5 via-primary/10 to-background border-t border-border relative overflow-hidden">
           {/* Subtle animated background */}
@@ -431,6 +415,7 @@ export default function Home() {
                 <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
                   <Link
                     to="/contact"
+                    onClick={() => analytics.contact.clickContactButton('CTA Section')}
                     className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 text-sm sm:text-base"
                   >
                     Get in Touch
@@ -441,6 +426,7 @@ export default function Home() {
                 <motion.a
                   href="/resume/VinitSahare_Resume.pdf"
                   download="VinitSahare_Resume.pdf"
+                  onClick={() => analytics.download.resume()}
                   className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 transition-all duration-300 text-sm sm:text-base"
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
@@ -453,6 +439,7 @@ export default function Home() {
                   href={developerInfo.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => analytics.social.clickGithub()}
                   className="inline-flex items-center gap-2 bg-background/80 backdrop-blur-sm border-2 border-border px-5 sm:px-7 py-3 sm:py-3.5 rounded-xl font-semibold hover:border-primary/50 hover:bg-accent/50 transition-all duration-300 text-sm sm:text-base"
                   whileHover={{ scale: 1.03, y: -2 }}
                   whileTap={{ scale: 0.98 }}
