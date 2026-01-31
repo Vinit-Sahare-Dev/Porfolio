@@ -141,6 +141,137 @@ export default function ProjectDetail() {
               )}
             </div>
           </motion.div>
+
+          {/* Case Study Section */}
+          {project.caseStudy && (
+            <motion.div
+              className="space-y-8 mt-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+            >
+              <div className="text-center space-y-2">
+                <h2 className="text-3xl font-bold">Case Study</h2>
+                <p className="text-muted-foreground">Deep dive into the development process</p>
+              </div>
+
+              {/* Problem */}
+              <div className="bg-card border border-border rounded-xl p-6 md:p-8 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                    <span className="text-2xl">🎯</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">The Problem</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  {project.caseStudy.problem}
+                </p>
+              </div>
+
+              {/* Solution */}
+              <div className="bg-card border border-border rounded-xl p-6 md:p-8 space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-lg bg-green-500/10 flex items-center justify-center">
+                    <span className="text-2xl">💡</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">The Solution</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  {project.caseStudy.solution}
+                </p>
+              </div>
+
+              {/* Technical Details */}
+              <div className="bg-card border border-border rounded-xl p-6 md:p-8 space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                    <span className="text-2xl">⚙️</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">Technical Details</h3>
+                </div>
+
+                {/* Architecture */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold flex items-center gap-2">
+                    <Code2 className="size-5 text-primary" />
+                    Architecture
+                  </h4>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.caseStudy.technicalDetails.architecture}
+                  </p>
+                </div>
+
+                {/* Challenges */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold">🚧 Challenges Faced</h4>
+                  <ul className="space-y-2">
+                    {project.caseStudy.technicalDetails.challenges.map((challenge, index) => (
+                      <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                        <span className="text-primary font-bold mt-1">{index + 1}.</span>
+                        <span>{challenge}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Key Implementations */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold">🔧 Key Implementations</h4>
+                  <ul className="space-y-2">
+                    {project.caseStudy.technicalDetails.keyImplementations.map((impl, index) => (
+                      <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                        <span className="text-green-500 mt-1">✓</span>
+                        <span>{impl}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Results */}
+              <div className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-6 md:p-8 space-y-6">
+                <div className="flex items-center gap-3">
+                  <div className="size-10 rounded-lg bg-primary/20 flex items-center justify-center">
+                    <span className="text-2xl">📊</span>
+                  </div>
+                  <h3 className="text-2xl font-bold">Results & Impact</h3>
+                </div>
+
+                {/* Metrics */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold">📈 Key Metrics</h4>
+                  <div className="grid md:grid-cols-2 gap-3">
+                    {project.caseStudy.results.metrics.map((metric, index) => (
+                      <div key={index} className="bg-background/50 rounded-lg p-4 border border-border">
+                        <p className="text-sm font-medium">{metric}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Impact */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold">🎯 Overall Impact</h4>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {project.caseStudy.results.impact}
+                  </p>
+                </div>
+
+                {/* Learnings */}
+                <div className="space-y-3">
+                  <h4 className="text-lg font-semibold">💭 Key Learnings</h4>
+                  <ul className="space-y-2">
+                    {project.caseStudy.results.learnings.map((learning, index) => (
+                      <li key={index} className="flex items-start gap-3 text-muted-foreground">
+                        <span className="text-primary mt-1">→</span>
+                        <span>{learning}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </motion.div>
+          )}
         </section>
       </div>
     </>

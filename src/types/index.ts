@@ -29,6 +29,20 @@ export interface Project {
   liveDemo?: string;
   liveUrl?: string;
   slug: string;
+  caseStudy?: {
+    problem: string;
+    solution: string;
+    technicalDetails: {
+      architecture: string;
+      challenges: string[];
+      keyImplementations: string[];
+    };
+    results: {
+      metrics: string[];
+      impact: string;
+      learnings: string[];
+    };
+  };
 }
 
 export interface Skill {
