@@ -5,7 +5,7 @@ export const developerInfo: DeveloperInfo = {
   name: 'Vinit Sahare',
   tagline: 'Java Full Stack Developer',
   heroIntroduction: 'Building scalable web applications with Java, Spring Boot, React, and modern DevOps practices.',
-  professionalSummary: `Full Stack Developer proficient in Java, Spring Boot, React.js, and SQL. I possess a strong foundation in object-oriented design, data structures, and the full software development lifecycle. My focus is on building scalable and effective web applications that solve real-world problems.
+  professionalSummary: `I'm Vinit Sahare, a Full Stack Developer proficient in Java, Spring Boot, React.js, and SQL. I possess a strong foundation in object-oriented design, data structures, and the full software development lifecycle. My focus is on building scalable and effective web applications that solve real-world problems.
 
 With hands-on experience from internships at Octal Net Services, Walmart Global Tech, and TCS, I've developed expertise in both frontend and backend technologies. I'm passionate about clean code, microservices architecture, and leveraging modern DevOps tools to deliver high-quality software.`,
   profileImage: profilePhoto,

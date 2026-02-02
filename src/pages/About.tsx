@@ -4,6 +4,7 @@ import { developerInfo } from '@/data/developer';
 import { Separator } from '@/components/ui/separator';
 import { SEOHead } from '@/components/seo/SEOHead';
 import { Badge } from '@/components/ui/badge';
+import { GitHubStats } from '@/components/github/GitHubStats';
 
 export default function About() {
   return (
@@ -24,7 +25,8 @@ export default function About() {
         </section>
 
         <section className="py-10 md:py-14 px-6 lg:px-8">
-          <div className="max-w-4xl mx-auto space-y-10">
+          <div className="max-w-6xl mx-auto space-y-10">
+            {/* Professional Summary */}
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
               <h2 className="text-xl font-semibold">Professional Summary</h2>
               {developerInfo.professionalSummary.split('\n\n').map((p, i) => (
@@ -34,8 +36,9 @@ export default function About() {
 
             <Separator />
 
+            {/* Experience */}
             <div className="space-y-4">
-              <h2 className="text-xl font-semibold flex items-center gap-2"><Briefcase className="size-4" /> Experience</h2>
+              <h2 className="text-xl font-semibold flex items-center gap-2"><Briefcase className="size-4" /> Internship Experience & Training</h2>
               {developerInfo.experience.map((exp, i) => (
                 <div key={i} className="border border-border rounded-lg p-6">
                   <div className="flex justify-between flex-wrap gap-2 mb-2">
@@ -50,6 +53,7 @@ export default function About() {
 
             <Separator />
 
+            {/* Education */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold flex items-center gap-2"><GraduationCap className="size-4" /> Education</h2>
               {developerInfo.education.map((edu, i) => (
@@ -65,6 +69,7 @@ export default function About() {
 
             <Separator />
 
+            {/* Achievements */}
             <div className="space-y-4">
               <h2 className="text-xl font-semibold flex items-center gap-2"><Award className="size-4" /> Achievements</h2>
               <ul className="space-y-3">
@@ -76,6 +81,19 @@ export default function About() {
               </ul>
             </div>
 
+            <Separator />
+
+            {/* GitHub Stats - At Bottom */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <h2 className="text-xl font-semibold mb-6">GitHub Statistics</h2>
+              <GitHubStats />
+            </motion.div>
+
+            {/* Social Links */}
             <div className="flex gap-4 pt-6">
               {developerInfo.socialLinks.github && (
                 <a href={developerInfo.socialLinks.github} target="_blank" rel="noopener noreferrer" className="p-3 border border-border rounded-lg hover:bg-accent transition-colors">

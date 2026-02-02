@@ -16,10 +16,6 @@ import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
 
-
-
-
-
 export default function Home() {
   const featuredProjects = getFeaturedProjects();
   const structuredData = generateProfilePageSchema();
