@@ -16,12 +16,38 @@ export function ArticleCard({ article, index = 0 }: ArticleCardProps) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
+      whileHover={{ 
+        scale: 1.03,
+        rotateY: 3,
+        transition: { type: "spring", stiffness: 300, damping: 20 }
+      }}
+      style={{ 
+        transformStyle: "preserve-3d",
+        perspective: 1000
+      }}
     >
       <Link to={`/blog/${article.slug}`}>
-        <Card className="group h-full transition-all duration-300 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1">
-          <CardHeader className="pb-3">
+        <Card className="group h-full transition-all duration-300 hover:shadow-2xl hover:border-primary/50 relative overflow-hidden">
+          {/* Animated background gradient */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            initial={false}
+          />
+          
+          {/* Shine effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent"
+            initial={{ x: "-100%", opacity: 0 }}
+            whileHover={{ 
+              x: "100%", 
+              opacity: 1,
+              transition: { duration: 0.6, ease: "easeInOut" }
+            }}
+          />
+
+          <CardHeader className="pb-3 relative z-10">
             <div className="flex items-center gap-2 mb-2">
-              <Badge variant="secondary" className="text-xs">
+              <Badge variant="secondary" className="text-xs group-hover:bg-primary/20 transition-colors">
                 {article.category}
               </Badge>
               {article.featured && (
@@ -30,11 +56,15 @@ export function ArticleCard({ article, index = 0 }: ArticleCardProps) {
                 </Badge>
               )}
             </div>
-            <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
+            <motion.h3 
+              className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
               {article.title}
-            </h3>
+            </motion.h3>
           </CardHeader>
-          <CardContent className="pt-0">
+          <CardContent className="pt-0 relative z-10">
             <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
               {article.excerpt}
             </p>
@@ -53,7 +83,12 @@ export function ArticleCard({ article, index = 0 }: ArticleCardProps) {
                   {article.readTime}
                 </span>
               </div>
-              <ArrowRight className="size-4 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              <motion.div
+                whileHover={{ x: 5 }}
+                transition={{ type: "spring", stiffness: 400 }}
+              >
+                <ArrowRight className="size-4 text-muted-foreground group-hover:text-primary transition-colors" />
+              </motion.div>
             </div>
           </CardContent>
         </Card>

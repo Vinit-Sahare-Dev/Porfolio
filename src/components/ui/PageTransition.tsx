@@ -5,44 +5,47 @@ interface PageTransitionProps {
   children: ReactNode;
 }
 
-const pageVariants = {
-  initial: {
-    opacity: 0,
-    y: 20,
-    scale: 0.98,
-  },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-  },
-  exit: {
-    opacity: 0,
-    y: -20,
-    scale: 0.98,
-  },
-};
-
-const pageTransition = {
-  type: "tween" as const,
-  ease: [0.25, 0.46, 0.45, 0.94] as const,
-  duration: 0.5,
-};
-
-/**
- * Page transition wrapper for smooth route changes
- * Provides consistent fade, slide and scale animations
- */
 export function PageTransition({ children }: PageTransitionProps) {
   return (
-    <motion.div
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      variants={pageVariants}
-      transition={pageTransition}
-    >
-      {children}
-    </motion.div>
+    <>
+      {/* Page content with fade and slide */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{
+          duration: 0.4,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        {children}
+      </motion.div>
+
+      {/* Animated overlay curtain */}
+      <motion.div
+        className="fixed inset-0 bg-background z-50 pointer-events-none"
+        initial={{ scaleY: 0 }}
+        animate={{ scaleY: 0 }}
+        exit={{ scaleY: 1 }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        style={{ originY: 0 }}
+      />
+      
+      <motion.div
+        className="fixed inset-0 bg-background z-50 pointer-events-none"
+        initial={{ scaleY: 1 }}
+        animate={{ scaleY: 0 }}
+        exit={{ scaleY: 0 }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1],
+          delay: 0.1,
+        }}
+        style={{ originY: 1 }}
+      />
+    </>
   );
 }
