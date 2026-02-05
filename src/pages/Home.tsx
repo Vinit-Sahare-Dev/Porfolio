@@ -15,6 +15,8 @@ import { ArrowRight, Briefcase, Calendar, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
+import { TechStackIcons } from '@/components/graphics/TechStackIcons';
+import { ProcessDiagram } from '@/components/graphics/ProcessDiagram';
 
 export default function Home() {
   const featuredProjects = getFeaturedProjects();
@@ -204,7 +206,7 @@ export default function Home() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.7 }}
                 >
-                <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
+                  <motion.div whileHover={{ scale: 1.03, y: -2 }} whileTap={{ scale: 0.98 }}>
                     <Link
                       to="/portfolio"
                       onClick={() => analytics.engagement.clickCTA('View My Work', 'Hero')}
@@ -297,24 +299,70 @@ export default function Home() {
           </ScrollReveal>
         </section>
 
-        {/* Skills Section - THIRD */}
-        <section className="py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-border">
-          <div className="max-w-6xl mx-auto">
+        {/* Skills Section - THIRD - Enhanced with Graphics */}
+        <section className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-border overflow-hidden">
+          {/* Animated gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
+          
+          {/* Floating orbs */}
+          <motion.div
+            className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              x: [0, 50, 0],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              x: [0, -40, 0],
+              y: [0, 40, 0],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1
+            }}
+          />
+          
+          <div className="relative max-w-6xl mx-auto">
             <ScrollReveal>
               <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
-                <Badge variant="secondary" className="mb-2">
-                  💻 Tech Stack
-                </Badge>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
-                  Technical Skills
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Badge variant="secondary" className="mb-2 text-sm px-4 py-1.5">
+                    💻 Tech Stack
+                  </Badge>
+                </motion.div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+                  Technical Expertise
                 </h2>
                 <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Building robust applications with modern technologies
+                  Mastering modern technologies to build scalable, high-performance applications
                 </p>
               </div>
             </ScrollReveal>
 
-            <SkillsVisualization />
+            <ScrollReveal delay={0.2}>
+              <TechStackIcons />
+            </ScrollReveal>
+            
+            <ScrollReveal delay={0.4}>
+              <div className="mt-16">
+                <SkillsVisualization />
+              </div>
+            </ScrollReveal>
           </div>
         </section>
 
@@ -363,6 +411,52 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Development Process Section - NEW */}
+        <section className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 lg:px-8 border-t border-border overflow-hidden">
+          {/* Animated background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-background" />
+          
+          {/* Decorative elements */}
+          <motion.div
+            className="absolute top-10 right-10 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          
+          <div className="relative max-w-6xl mx-auto">
+            <ScrollReveal>
+              <div className="text-center mb-12 sm:mb-16 space-y-3 sm:space-y-4">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Badge variant="secondary" className="mb-2 text-sm px-4 py-1.5">
+                    ⚡ Process
+                  </Badge>
+                </motion.div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+                  Development Workflow
+                </h2>
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+                  From concept to deployment - a systematic approach to building quality software
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal delay={0.2}>
+              <ProcessDiagram />
+            </ScrollReveal>
           </div>
         </section>
 
